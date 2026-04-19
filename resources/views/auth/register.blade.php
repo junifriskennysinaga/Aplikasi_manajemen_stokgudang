@@ -1,66 +1,74 @@
-<x-guest-layout>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Register - E-Ware</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100">
 
-    <!-- 🔥 JUDUL -->
-    <div class="text-center mb-6">
-        <h1 class="text-2xl font-bold text-gray-700">
-            Selamat Datang di Aplikasi Manajemen Stok Gudang
-        </h1>
-        <p class="text-sm text-gray-500 mt-1">
-            Silakan daftar akun terlebih dahulu
-        </p>
-    </div>
+<div class="min-h-screen flex items-center justify-center">
+    <div class="w-full max-w-5xl bg-white shadow-lg rounded-xl overflow-hidden flex">
 
-    <form method="POST" action="{{ route('register') }}">
-        @csrf
+        <!-- LEFT -->
+        <div class="hidden md:flex w-1/2 bg-blue-600 text-white p-10 flex-col justify-center">
+            <h1 class="text-3xl font-bold mb-4">E-Ware</h1>
+            <p class="mb-6">
+                Buat akun untuk mulai mengelola stok barang dengan sistem yang modern dan efisien.
+            </p>
 
-        <!-- Nama -->
-        <div>
-            <x-input-label for="name" value="Nama" />
-            <x-text-input id="name" class="block mt-1 w-full"
-                type="text" name="name"
-                :value="old('name')" required autofocus />
-            <x-input-error :messages="$errors->get('name')" class="mt-2" />
+            <ul class="space-y-2 text-sm">
+                <li> Monitoring stok real-time</li>
+                <li> Laporan otomatis</li>
+                <li> Multi user (Admin & Manager)</li>
+            </ul>
         </div>
 
-        <!-- Email -->
-        <div class="mt-4">
-            <x-input-label for="email" value="Email" />
-            <x-text-input id="email" class="block mt-1 w-full"
-                type="email" name="email"
-                :value="old('email')" required />
-            <x-input-error :messages="$errors->get('email')" class="mt-2" />
-        </div>
+        <!-- RIGHT -->
+        <div class="w-full md:w-1/2 p-10">
+            <h2 class="text-2xl font-semibold mb-2">Register</h2>
+            <p class="text-gray-500 mb-6">Buat akun baru</p>
 
-        <!-- Password -->
-        <div class="mt-4">
-            <x-input-label for="password" value="Password" />
-            <x-text-input id="password" class="block mt-1 w-full"
-                type="password" name="password" required />
-            <x-input-error :messages="$errors->get('password')" class="mt-2" />
-        </div>
+            <form method="POST" action="{{ route('register') }}">
+                @csrf
 
-        <!-- Konfirmasi Password -->
-        <div class="mt-4">
-            <x-input-label for="password_confirmation" value="Konfirmasi Password" />
-            <x-text-input id="password_confirmation" class="block mt-1 w-full"
-                type="password" name="password_confirmation" required />
-            <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
-        </div>
+                <div class="mb-4">
+                    <label class="block mb-1 text-sm">Nama</label>
+                    <input type="text" name="name"
+                        class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500">
+                </div>
 
-        <!-- BUTTON -->
-        <div class="flex items-center justify-between mt-4">
+                <div class="mb-4">
+                    <label class="block mb-1 text-sm">Email</label>
+                    <input type="email" name="email"
+                        class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500">
+                </div>
 
-            <a class="text-sm text-gray-600 hover:text-gray-900"
-                href="{{ route('login') }}">
+                <div class="mb-4">
+                    <label class="block mb-1 text-sm">Password</label>
+                    <input type="password" name="password"
+                        class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500">
+                </div>
+
+                <div class="mb-4">
+                    <label class="block mb-1 text-sm">Konfirmasi Password</label>
+                    <input type="password" name="password_confirmation"
+                        class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500">
+                </div>
+
+                <button class="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700">
+                    Register
+                </button>
+            </form>
+
+            <p class="text-center text-sm mt-4">
                 Sudah punya akun?
-            </a>
-
-            <x-primary-button>
-                Daftar
-            </x-primary-button>
-
+                <a href="{{ route('login') }}" class="text-blue-500">Login disini</a>
+            </p>
         </div>
 
-    </form>
+    </div>
+</div>
 
-</x-guest-layout>
+</body>
+</html>
