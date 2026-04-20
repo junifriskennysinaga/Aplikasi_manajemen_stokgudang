@@ -2,7 +2,7 @@
 
 @section('content')
 
-<div class="p-6 bg-gray-100 min-h-screen space-y-6">
+<div class="p-6 bg-pink-50 min-h-screen space-y-6">
 
     <!-- HEADER -->
     <div>
@@ -18,27 +18,20 @@
 
             <div class="relative w-full">
 
-                <!-- ICON -->
-                <div class="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-400">
-                    <svg xmlns="http://www.w3.org/2000/svg"
-                         class="w-5 h-5"
-                         fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                              d="M12 4v16m8-8H4" />
-                    </svg>
+                <div class="absolute inset-y-0 left-0 flex items-center pl-3 text-pink-400">
                 </div>
 
                 <input 
                     name="nama_kategori" 
                     placeholder="Masukkan nama kategori..."
-                    class="w-full pl-10 border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                    class="w-full pl-10 border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-pink-400 focus:outline-none"
                 >
 
             </div>
 
             <button 
-                class="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 shadow transition w-full md:w-auto">
-                + Tambah
+                class="bg-pink-500 text-white px-6 py-2 rounded-lg hover:bg-pink-600 shadow transition w-full md:w-auto">
+                Tambah
             </button>
 
         </form>
@@ -48,14 +41,13 @@
     <!-- TABLE -->
     <div class="bg-white rounded-xl shadow-md border overflow-hidden">
 
-        <!-- HEADER TABLE -->
-        <div class="bg-gray-800 text-white px-4 py-3 font-semibold">
+        <div class="bg-pink-500 text-white px-4 py-3 font-semibold">
             Daftar Kategori
         </div>
 
         <table class="w-full text-sm text-left text-gray-600">
 
-            <thead class="bg-gray-100 text-gray-700 uppercase text-xs">
+            <thead class="bg-pink-100 text-gray-700 uppercase text-xs">
                 <tr>
                     <th class="px-6 py-3">No</th>
                     <th class="px-6 py-3">Nama Kategori</th>
@@ -67,7 +59,7 @@
 
                 @forelse($kategori as $i => $k)
 
-                <tr class="border-t hover:bg-gray-50 transition">
+                <tr class="border-t hover:bg-pink-50 transition">
 
                     <td class="px-6 py-3 font-medium">
                         {{ $i + 1 }}
@@ -85,9 +77,9 @@
                             <button 
                                 data-modal-target="editModal{{ $k->id }}" 
                                 data-modal-toggle="editModal{{ $k->id }}"
-                                class="flex items-center gap-1 bg-yellow-400 text-white px-3 py-1.5 rounded-lg hover:bg-yellow-500 text-xs">
+                                class="flex items-center gap-1 bg-pink-100 text-pink-600 px-3 py-1.5 rounded-lg hover:bg-pink-200 text-xs transition">
 
-                                ✏ Edit
+                                 Edit
                             </button>
 
                             <!-- DELETE -->
@@ -97,9 +89,9 @@
                                 @method('DELETE')
 
                                 <button 
-                                    class="flex items-center gap-1 bg-red-500 text-white px-3 py-1.5 rounded-lg hover:bg-red-600 text-xs">
+                                    class="flex items-center gap-1 bg-gray-100 text-gray-600 px-3 py-1.5 rounded-lg hover:bg-red-100 hover:text-red-500 text-xs transition">
 
-                                    🗑 Hapus
+                                     Hapus
                                 </button>
 
                             </form>
@@ -110,9 +102,9 @@
 
                 </tr>
 
-                <!-- MODAL EDIT (FLOWBITE STYLE) -->
+                <!-- MODAL EDIT -->
                 <div id="editModal{{ $k->id }}" tabindex="-1"
-                     class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black/50">
+                     class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm">
 
                     <div class="bg-white rounded-xl shadow-xl p-6 w-full max-w-md">
 
@@ -128,7 +120,7 @@
                                 type="text"
                                 name="nama_kategori"
                                 value="{{ $k->nama_kategori }}"
-                                class="w-full border border-gray-300 rounded-lg px-4 py-2 mb-4 focus:ring-2 focus:ring-blue-500"
+                                class="w-full border border-gray-300 rounded-lg px-4 py-2 mb-4 focus:ring-2 focus:ring-pink-400"
                             >
 
                             <div class="flex justify-end gap-2">
@@ -139,7 +131,7 @@
                                     Batal
                                 </button>
 
-                                <button class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">
+                                <button class="bg-pink-500 text-white px-4 py-2 rounded-lg hover:bg-pink-600">
                                     Update
                                 </button>
 

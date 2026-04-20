@@ -2,29 +2,40 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>E-Ware - Stok Gudang</title>
+    <title>E-Ware - Aplikasi Manajemen Stok Gudang</title>
 
+    <!-- Tailwind -->
     <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Flowbite -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.1/flowbite.min.css" rel="stylesheet" />
+
+    <!-- Lucide -->
     <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- FONT -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Poppins:wght@600;800&family=Pacifico&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
 </head>
 
-<body class="bg-gray-100">
+<body class="bg-pink-50 font-[Inter]">
 
 <div class="flex min-h-screen">
 
     <!-- SIDEBAR -->
-    <aside class="w-64 bg-blue-900 text-white p-5 shadow-xl">
+    <aside class="w-64 bg-gradient-to-b from-pink-400 to-pink-600 text-white p-5 shadow-xl">
 
-        <h2 class="text-xl font-bold mb-8 flex items-center gap-2 border-b border-blue-700 pb-4">
+        <!-- LOGO (Aesthetic) -->
+        <h2 class="mb-8 flex items-center gap-2 border-b border-pink-300 pb-4">
             <i data-lucide="box"></i>
-            E-Ware
+            <span class="font-[Pacifico] text-2xl tracking-wide">
+                E-Ware
+            </span>
         </h2>
 
         <ul class="space-y-2 text-sm">
 
             <li>
-                <a href="/dashboard" class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-blue-700">
+                <a href="/dashboard" class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-white/20 transition">
                     <i data-lucide="home"></i> Dashboard
                 </a>
             </li>
@@ -32,25 +43,25 @@
             @if(strtolower(auth()->user()->role) == 'admin')
 
             <li>
-                <a href="/kategori" class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-blue-700">
+                <a href="/kategori" class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-white/20 transition">
                     <i data-lucide="folder"></i> Kategori
                 </a>
             </li>
 
             <li>
-                <a href="/barang" class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-blue-700">
+                <a href="/barang" class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-white/20 transition">
                     <i data-lucide="package"></i> Data Barang
                 </a>
             </li>
 
             <li>
-                <a href="/barang-masuk" class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-blue-700">
+                <a href="/barang-masuk" class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-white/20 transition">
                     <i data-lucide="arrow-down-circle"></i> Barang Masuk
                 </a>
             </li>
 
             <li>
-                <a href="/barang-keluar" class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-blue-700">
+                <a href="/barang-keluar" class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-white/20 transition">
                     <i data-lucide="arrow-up-circle"></i> Barang Keluar
                 </a>
             </li>
@@ -58,7 +69,7 @@
             @endif
 
             <li>
-                <a href="/laporan" class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-blue-700">
+                <a href="/laporan" class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-white/20 transition">
                     <i data-lucide="bar-chart-3"></i> Laporan
                 </a>
             </li>
@@ -71,34 +82,39 @@
     <div class="flex-1 flex flex-col">
 
         <!-- NAVBAR -->
-        <nav class="bg-white shadow px-6 py-4 flex justify-between items-center">
+        <nav class="bg-white shadow-sm px-6 py-4 flex justify-between items-center">
 
             <div>
-                <h1 class="text-gray-700 font-semibold">
-                    @yield('title', 'E-Ware')
+                <h1 class="text-gray-800 text-lg">
+                    <!-- E-Ware (Modern Bold) -->
+                    <span class="font-[Poppins] font-extrabold text-pink-500 tracking-wide">
+                        E-Ware
+                    </span>
                 </h1>
                 <p class="text-xs text-gray-500">
-                    Aplikasi manajemen stok barang
+                    Aplikasi manajemen stok gudang
                 </p>
             </div>
 
             <div class="flex items-center gap-5">
 
-                <button class="relative p-2 hover:bg-gray-100 rounded-lg">
+                <!-- NOTIF -->
+                <button class="relative p-2 hover:bg-pink-100 rounded-lg transition">
                     <i data-lucide="bell"></i>
-                    <span class="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
+                    <span class="absolute top-1 right-1 w-2 h-2 bg-pink-500 rounded-full"></span>
                 </button>
 
+                <!-- PROFILE -->
                 <div class="relative">
                     <button id="profileBtn"
-                        class="flex items-center gap-3 px-3 py-2 bg-gray-100 rounded-lg hover:bg-gray-200">
+                        class="flex items-center gap-3 px-3 py-2 bg-pink-100 rounded-lg hover:bg-pink-200 transition">
 
-                        <div class="w-8 h-8 bg-blue-600 text-white flex items-center justify-center rounded-full font-bold">
+                        <div class="w-8 h-8 bg-pink-500 text-white flex items-center justify-center rounded-full font-bold">
                             {{ strtoupper(substr(auth()->user()->name,0,1)) }}
                         </div>
 
                         <div class="text-left">
-                            <p class="text-sm font-semibold">{{ auth()->user()->name }}</p>
+                            <p class="text-sm font-semibold text-gray-800">{{ auth()->user()->name }}</p>
                             <p class="text-xs text-gray-500">{{ auth()->user()->role }}</p>
                         </div>
 
@@ -107,13 +123,13 @@
                     <div id="profileMenu"
                          class="hidden absolute right-0 mt-2 w-44 bg-white border rounded-lg shadow-lg z-50">
 
-                        <a href="/profile" class="block px-4 py-2 text-sm hover:bg-gray-100">
+                        <a href="/profile" class="block px-4 py-2 text-sm hover:bg-pink-50">
                             Profile
                         </a>
 
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf
-                            <button class="w-full text-left px-4 py-2 text-sm hover:bg-gray-100 text-red-600">
+                            <button class="w-full text-left px-4 py-2 text-sm hover:bg-pink-50 text-red-500">
                                 Logout
                             </button>
                         </form>
@@ -131,7 +147,11 @@
 
         <!-- FOOTER -->
         <footer class="text-center text-xs text-gray-500 py-3 border-t bg-white">
-            © {{ date('Y') }} E-Ware - Sistem Gudang
+            © {{ date('Y') }} 
+            <!-- E-Ware (Soft Footer Style) -->
+            <span class="font-[Playfair Display] text-pink-400 font-bold">
+                E-Ware
+            </span>
         </footer>
 
     </div>

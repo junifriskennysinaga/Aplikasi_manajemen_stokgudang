@@ -2,32 +2,36 @@
 
 @section('content')
 
-<div class="p-6 bg-gray-100 min-h-screen">
+<div class="p-6 bg-gradient-to-br from-pink-50 via-rose-50 to-white min-h-screen">
 
     <!-- HEADER -->
     <div class="mb-6">
-        <h1 class="text-3xl font-bold text-gray-800">Laporan Stok Gudang</h1>
-        <p class="text-gray-500">Monitoring barang masuk dan keluar</p>
+        <h1 class="text-3xl font-extrabold tracking-tight text-gray-800">
+            Laporan Stok Gudang
+        </h1>
+        <p class="text-gray-500 font-medium mt-1">
+            Monitoring barang masuk dan keluar
+        </p>
     </div>
 
     <!-- FILTER -->
-    <div class="bg-white p-4 rounded-xl shadow mb-6">
+    <div class="bg-white p-4 rounded-xl shadow mb-6 border border-pink-100">
 
         <form method="GET" class="flex flex-wrap gap-3 items-end">
 
             <div>
-                <label class="text-sm text-gray-600">Dari</label>
+                <label class="text-sm text-gray-600 font-medium">Dari</label>
                 <input type="date" name="dari" value="{{ $dari }}"
-                    class="border rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-400">
+                    class="border rounded-lg px-3 py-2 focus:ring-2 focus:ring-pink-400">
             </div>
 
             <div>
-                <label class="text-sm text-gray-600">Sampai</label>
+                <label class="text-sm text-gray-600 font-medium">Sampai</label>
                 <input type="date" name="sampai" value="{{ $sampai }}"
-                    class="border rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-400">
+                    class="border rounded-lg px-3 py-2 focus:ring-2 focus:ring-pink-400">
             </div>
 
-            <button class="bg-blue-500 hover:bg-blue-600 text-white px-5 py-2 rounded-lg shadow">
+            <button class="bg-pink-500 hover:bg-pink-600 text-white px-5 py-2 rounded-lg shadow font-semibold">
                 Tampilkan
             </button>
 
@@ -39,12 +43,15 @@
     <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
 
         <!-- MASUK -->
-        <div class="bg-green-500 text-white p-5 rounded-xl shadow">
+        <div class="bg-pink-500 text-white p-5 rounded-xl shadow">
+
             <div class="flex items-center justify-between">
 
                 <div>
-                    <p class="text-sm opacity-90">Total Barang Masuk</p>
-                    <h2 class="text-3xl font-bold">{{ $totalMasuk }}</h2>
+                    <p class="text-sm opacity-90 font-medium">Total Barang Masuk</p>
+                    <h2 class="text-4xl font-black tracking-tight">
+                        {{ $totalMasuk }}
+                    </h2>
                 </div>
 
                 <div class="bg-white/20 p-3 rounded-lg">
@@ -60,12 +67,15 @@
         </div>
 
         <!-- KELUAR -->
-        <div class="bg-red-500 text-white p-5 rounded-xl shadow">
+        <div class="bg-rose-400 text-white p-5 rounded-xl shadow">
+
             <div class="flex items-center justify-between">
 
                 <div>
-                    <p class="text-sm opacity-90">Total Barang Keluar</p>
-                    <h2 class="text-3xl font-bold">{{ $totalKeluar }}</h2>
+                    <p class="text-sm opacity-90 font-medium">Total Barang Keluar</p>
+                    <h2 class="text-4xl font-black tracking-tight">
+                        {{ $totalKeluar }}
+                    </h2>
                 </div>
 
                 <div class="bg-white/20 p-3 rounded-lg">
@@ -78,14 +88,15 @@
                 </div>
 
             </div>
+
         </div>
 
     </div>
 
     <!-- TABLE -->
-    <div class="bg-white rounded-xl shadow overflow-hidden">
+    <div class="bg-white rounded-xl shadow overflow-hidden border border-pink-100">
 
-        <div class="bg-gray-800 text-white px-4 py-3 font-semibold">
+        <div class="bg-pink-600 text-white px-4 py-3 font-bold tracking-wide">
             Detail Transaksi Barang
         </div>
 
@@ -93,8 +104,8 @@
 
             <table class="w-full text-sm">
 
-                <thead class="bg-gray-100 text-gray-700">
-                    <tr>
+                <thead class="bg-pink-50 text-gray-700">
+                    <tr class="font-semibold">
                         <th class="p-3 text-left">Tanggal</th>
                         <th class="p-3 text-left">Nama Barang</th>
                         <th class="p-3 text-center">Masuk</th>
@@ -102,32 +113,23 @@
                     </tr>
                 </thead>
 
-                <tbody>
+                <tbody class="font-medium">
 
                 @forelse($barangMasuk as $m)
 
-                    <tr class="border-b hover:bg-green-50 transition">
+                    <tr class="border-b hover:bg-pink-50 transition">
 
                         <td class="p-3 text-gray-600">
                             {{ $m->tanggal }}
                         </td>
 
-                        <td class="p-3 font-semibold text-gray-800">
+                        <td class="p-3 text-gray-800 font-semibold">
                             {{ $m->barang->nama_barang ?? '-' }}
                         </td>
 
                         <td class="p-3 text-center">
-                            <span class="inline-flex items-center gap-1 bg-green-100 text-green-700 px-3 py-1 rounded-full font-semibold">
-
-                                <svg xmlns="http://www.w3.org/2000/svg"
-                                     class="w-4 h-4"
-                                     fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                          d="M5 13l4 4L19 7" />
-                                </svg>
-
+                            <span class="bg-pink-100 text-pink-700 px-3 py-1 rounded-full font-semibold">
                                 +{{ $m->jumlah }}
-
                             </span>
                         </td>
 
@@ -140,30 +142,21 @@
 
                 @forelse($barangKeluar as $k)
 
-                    <tr class="border-b hover:bg-red-50 transition">
+                    <tr class="border-b hover:bg-pink-50 transition">
 
                         <td class="p-3 text-gray-600">
                             {{ $k->tanggal }}
                         </td>
 
-                        <td class="p-3 font-semibold text-gray-800">
+                        <td class="p-3 text-gray-800 font-semibold">
                             {{ $k->barang->nama_barang ?? '-' }}
                         </td>
 
                         <td class="p-3 text-center text-gray-400">-</td>
 
                         <td class="p-3 text-center">
-                            <span class="inline-flex items-center gap-1 bg-red-100 text-red-700 px-3 py-1 rounded-full font-semibold">
-
-                                <svg xmlns="http://www.w3.org/2000/svg"
-                                     class="w-4 h-4"
-                                     fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                          d="M19 13H5m7-7l-7 7 7 7" />
-                                </svg>
-
+                            <span class="bg-pink-200 text-pink-800 px-3 py-1 rounded-full font-semibold">
                                 -{{ $k->jumlah }}
-
                             </span>
                         </td>
 
