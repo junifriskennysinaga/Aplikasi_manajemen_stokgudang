@@ -16,23 +16,39 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-// ✅ DASHBOARD ADA DATA
+
 Route::get('/dashboard', function () {
     $totalBarang = Barang::count();
     $barangMasuk = BarangMasuk::sum('jumlah');
     $barangKeluar = BarangKeluar::sum('jumlah');
 
-    return view('dashboard', compact('totalBarang', 'barangMasuk', 'barangKeluar'));
+    return view('dashboard', compact(
+        'totalBarang',
+        'barangMasuk',
+        'barangKeluar'
+    ));
 })->middleware(['auth'])->name('dashboard');
+
 
 Route::middleware('auth')->group(function () {
 
+    // KATEGORI
     Route::resource('kategori', KategoriController::class);
+
+    // BARANG
     Route::resource('barang', BarangController::class);
+
+    // BARANG MASUK
     Route::resource('barang-masuk', BarangMasukController::class);
+
+    // BARANG KELUAR
     Route::resource('barang-keluar', BarangKeluarController::class);
 
+    // LAPORAN
     Route::get('/laporan', [LaporanController::class, 'index']);
+
+    Route::get('/profile', [ProfileController::class, 'index'])
+        ->name('profile');
 });
 
 require __DIR__.'/auth.php';

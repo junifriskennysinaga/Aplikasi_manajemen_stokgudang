@@ -2,6 +2,17 @@
 
 @section('content')
 
+<style>
+input:focus, select:focus, textarea:focus {
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+input:focus, select:focus, textarea:focus {
+    border-color: #f472b6 !important; 
+}
+</style>
+
 <div class="p-6 bg-pink-50 min-h-screen space-y-6">
 
     <!-- HEADER -->
@@ -18,13 +29,11 @@
 
             <div class="relative w-full">
 
-                <div class="absolute inset-y-0 left-0 flex items-center pl-3 text-pink-400">
-                </div>
-
                 <input 
                     name="nama_kategori" 
                     placeholder="Masukkan nama kategori..."
-                    class="w-full pl-10 border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-pink-400 focus:outline-none"
+                    class="w-full border border-gray-300 rounded-lg px-4 py-2 
+                    focus:outline-none focus:ring-2 focus:ring-pink-400 focus:border-pink-400"
                 >
 
             </div>
@@ -77,9 +86,8 @@
                             <button 
                                 data-modal-target="editModal{{ $k->id }}" 
                                 data-modal-toggle="editModal{{ $k->id }}"
-                                class="flex items-center gap-1 bg-pink-100 text-pink-600 px-3 py-1.5 rounded-lg hover:bg-pink-200 text-xs transition">
-
-                                 Edit
+                                class="bg-pink-100 text-pink-600 px-3 py-1.5 rounded-lg hover:bg-pink-200 text-xs transition">
+                                Edit
                             </button>
 
                             <!-- DELETE -->
@@ -89,9 +97,8 @@
                                 @method('DELETE')
 
                                 <button 
-                                    class="flex items-center gap-1 bg-gray-100 text-gray-600 px-3 py-1.5 rounded-lg hover:bg-red-100 hover:text-red-500 text-xs transition">
-
-                                     Hapus
+                                    class="bg-gray-100 text-gray-600 px-3 py-1.5 rounded-lg hover:bg-red-100 hover:text-red-500 text-xs transition">
+                                    Hapus
                                 </button>
 
                             </form>
@@ -120,7 +127,8 @@
                                 type="text"
                                 name="nama_kategori"
                                 value="{{ $k->nama_kategori }}"
-                                class="w-full border border-gray-300 rounded-lg px-4 py-2 mb-4 focus:ring-2 focus:ring-pink-400"
+                                class="w-full border border-gray-300 rounded-lg px-4 py-2 mb-4 
+                                focus:outline-none focus:ring-2 focus:ring-pink-400 focus:border-pink-400"
                             >
 
                             <div class="flex justify-end gap-2">

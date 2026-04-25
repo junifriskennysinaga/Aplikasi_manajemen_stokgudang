@@ -8,21 +8,33 @@ use Illuminate\Http\Request;
 
 class BarangController extends Controller
 {
+
     public function index()
     {
         $barang = Barang::with('kategori')->latest()->get();
 
-        return view('barang.index', compact('barang'));
+        $barangHabis = Barang::where('stok', '<=', 5)->get();
+
+        return view('barang.index', compact(
+            'barang',
+            'barangHabis'
+        ));
     }
 
-    // ➕ FORM CREATE
+    // ➕ FORM TAMBAH BARANG
     public function create()
     {
         $kategori = Kategori::all();
 
-        return view('barang.create', compact('kategori'));
+        $barangHabis = Barang::where('stok', '<=', 5)->get();
+
+        return view('barang.create', compact(
+            'kategori',
+            'barangHabis'
+        ));
     }
 
+    // 💾 SIMPAN DATA BARANG
     public function store(Request $request)
     {
         $request->validate([
@@ -35,19 +47,26 @@ class BarangController extends Controller
             'nama_barang' => $request->nama_barang,
             'satuan' => $request->satuan,
             'kategori_id' => $request->kategori_id,
-            'stok' => 0
+            'stok' => 0 // stok awal default
         ]);
 
-        return redirect()->route('barang.index')
+        return redirect()
+            ->route('barang.index')
             ->with('success', 'Data barang berhasil ditambahkan');
     }
 
     public function edit($id)
     {
-        $barang = Barang::findOrFail($id);
+        $barang = Barang::with('kategori')->findOrFail($id);
         $kategori = Kategori::all();
 
-        return view('barang.edit', compact('barang', 'kategori'));
+        $barangHabis = Barang::where('stok', '<=', 5)->get();
+
+        return view('barang.edit', compact(
+            'barang',
+            'kategori',
+            'barangHabis'
+        ));
     }
 
     public function update(Request $request, $id)
@@ -66,7 +85,8 @@ class BarangController extends Controller
             'kategori_id' => $request->kategori_id,
         ]);
 
-        return redirect()->route('barang.index')
+        return redirect()
+            ->route('barang.index')
             ->with('success', 'Data barang berhasil diupdate');
     }
 
@@ -74,6 +94,7 @@ class BarangController extends Controller
     {
         Barang::findOrFail($id)->delete();
 
-        return back()->with('success', 'Data barang berhasil dihapus');
+        return back()
+            ->with('success', 'Data barang berhasil dihapus');
     }
 }

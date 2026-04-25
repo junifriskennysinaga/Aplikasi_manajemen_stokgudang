@@ -2,73 +2,114 @@
 
 @section('content')
 
-<div class="p-6 bg-pink-50 min-h-screen flex justify-center items-start">
+<div class="p-6 bg-pink-50 min-h-screen">
 
-    <div class="w-full max-w-xl bg-white rounded-2xl shadow-md overflow-hidden border">
+    <!-- CARD EDIT -->
+    <div class="bg-white rounded-xl shadow-xl p-6 w-full max-w-2xl mx-auto">
 
-        <!-- HEADER -->
-        <div class="px-6 py-4 border-b">
-            <h2 class="text-xl font-bold text-gray-800">
-                Edit Barang
-            </h2>
-            <p class="text-sm text-gray-500">
-                Perbarui data barang di bawah ini
-            </p>
-        </div>
+        <h3 class="text-2xl font-bold text-gray-800">
+            Edit Barang
+        </h3>
 
-        <!-- FORM -->
-        <form action="/barang/{{ $barang->id }}" method="POST" class="p-6 space-y-5">
+        <p class="text-gray-500 mb-6">
+            Perbarui data barang di bawah ini
+        </p>
+
+        <form method="POST" action="/barang/{{ $barang->id }}">
             @csrf
             @method('PUT')
 
-            <!-- NAMA -->
-            <div>
-                <label class="block text-sm text-gray-600 mb-1">
+            <!-- Nama Barang -->
+            <div class="mb-4">
+                <label class="block text-gray-600 mb-2">
                     Nama Barang
                 </label>
-                <input type="text" name="nama_barang"
+
+                <input 
+                    type="text"
+                    name="nama_barang"
                     value="{{ $barang->nama_barang }}"
-                    class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-pink-400 focus:outline-none">
+                    class="w-full border border-gray-300 rounded-lg px-4 py-3
+                    focus:outline-none focus:border-pink-400"
+                >
             </div>
 
-            <!-- SATUAN -->
-            <div>
-                <label class="block text-sm text-gray-600 mb-1">
+            <!-- Satuan -->
+            <div class="mb-4">
+                <label class="block text-gray-600 mb-2">
                     Satuan
                 </label>
-                <input type="text" name="satuan"
+
+                <input 
+                    type="text"
+                    name="satuan"
                     value="{{ $barang->satuan }}"
-                    class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-pink-400 focus:outline-none">
+                    class="w-full border border-gray-300 rounded-lg px-4 py-3
+                    focus:outline-none focus:border-pink-400"
+                >
             </div>
 
-            <!-- KATEGORI -->
-            <div>
-                <label class="block text-sm text-gray-600 mb-1">
+            <!-- Kategori -->
+            <div class="mb-6">
+                <label class="block text-gray-600 mb-2">
                     Kategori
                 </label>
-                <select name="kategori_id"
-                    class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-pink-400 focus:outline-none">
-                    
-                    @foreach($kategori as $k)
-                        <option value="{{ $k->id }}"
-                            {{ $barang->kategori_id == $k->id ? 'selected' : '' }}>
-                            {{ $k->nama_kategori }}
-                        </option>
-                    @endforeach
 
-                </select>
+                <div class="relative">
+
+                    <!-- tombol dropdown -->
+                    <button 
+                        type="button"
+                        id="dropdownButton"
+                        class="w-full border border-pink-400 rounded-lg px-4 py-3 
+                        text-left bg-white focus:outline-none">
+
+                        <span id="selectedText">
+                            {{ $barang->kategori->nama_kategori }}
+                        </span>
+                    </button>
+
+                    <!-- menu dropdown -->
+                    <div 
+                        id="dropdownMenu"
+                        class="hidden absolute w-full mt-1 bg-white border 
+                        rounded-lg shadow-lg z-50">
+
+                        @foreach($kategori as $k)
+
+                            <div 
+                                onclick="selectKategori('{{ $k->id }}', '{{ $k->nama_kategori }}')"
+                                class="px-4 py-3 hover:bg-pink-100 cursor-pointer transition">
+
+                                {{ $k->nama_kategori }}
+
+                            </div>
+
+                        @endforeach
+
+                    </div>
+
+                </div>
+
+                <!-- hidden input -->
+                <input 
+                    type="hidden"
+                    name="kategori_id"
+                    id="kategori_id"
+                    value="{{ $barang->kategori_id }}">
             </div>
 
-            <!-- BUTTON -->
-            <div class="border-t pt-4 flex justify-end gap-3">
+            <!-- tombol -->
+            <div class="flex justify-end gap-3">
 
-                <a href="/barang"
-                   class="px-5 py-2 rounded-lg text-sm text-gray-600 bg-gray-100 hover:bg-gray-200 transition">
+                <a 
+                    href="/barang"
+                    class="px-6 py-2 bg-gray-100 rounded-lg hover:bg-gray-200">
                     Batal
                 </a>
 
-                <button type="submit"
-                    class="px-5 py-2 rounded-lg text-sm text-white bg-pink-500 hover:bg-pink-600 shadow transition">
+                <button
+                    class="px-6 py-2 bg-pink-500 text-white rounded-lg hover:bg-pink-600">
                     Update
                 </button>
 
@@ -79,5 +120,27 @@
     </div>
 
 </div>
+
+<!-- SCRIPT DROPDOWN -->
+<script>
+const btn = document.getElementById('dropdownButton');
+const menu = document.getElementById('dropdownMenu');
+
+btn.addEventListener('click', () => {
+    menu.classList.toggle('hidden');
+});
+
+function selectKategori(id, nama) {
+    document.getElementById('kategori_id').value = id;
+    document.getElementById('selectedText').innerText = nama;
+    menu.classList.add('hidden');
+}
+
+window.addEventListener('click', function(e) {
+    if (!btn.contains(e.target) && !menu.contains(e.target)) {
+        menu.classList.add('hidden');
+    }
+});
+</script>
 
 @endsection
