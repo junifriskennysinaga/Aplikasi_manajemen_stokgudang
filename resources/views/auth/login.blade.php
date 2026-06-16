@@ -2,82 +2,113 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Login - E-Ware</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <!-- Tailwind -->
+    <title>Login - Gudangku</title>
+
     <script src="https://cdn.tailwindcss.com"></script>
 
-    <!-- Font -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 </head>
 
-<body class="bg-pink-50 font-[Inter]">
+<body class="bg-gray-100 font-[Inter]">
 
 <div class="min-h-screen flex items-center justify-center px-4">
 
-    <div class="w-full max-w-5xl bg-white shadow-xl rounded-2xl overflow-hidden flex">
+    <div class="w-full max-w-5xl bg-white rounded-2xl shadow-lg overflow-hidden grid md:grid-cols-2">
 
-        <!-- LEFT SIDE -->
-        <div class="hidden md:flex w-1/2 bg-gradient-to-br from-pink-500 to-purple-500 text-white p-10 flex-col justify-center">
+        <!-- LEFT SIDE (INFO) -->
+        <div class="hidden md:flex flex-col justify-center bg-gray-900 text-white p-12">
 
-            <h1 class="text-4xl font-extrabold mb-4">E-Ware</h1>
+            <h1 class="text-4xl font-bold">Gudangku</h1>
 
-            <p class="mb-6 text-pink-100">
-                Sistem manajemen stok gudang modern untuk membantu mengelola 
-                barang masuk dan keluar dengan lebih mudah dan efisien.
+            <p class="text-gray-300 mt-4 leading-relaxed">
+                Sistem manajemen gudang untuk mengelola stok barang,
+                supplier, barang masuk, dan barang keluar secara efisien.
             </p>
 
-            <ul class="space-y-2 text-sm text-pink-100">
-                <li> Monitoring stok real-time</li>
-                <li> Laporan otomatis</li>
-                <li> Multi user (Admin & Manager)</li>
-            </ul>
+            <div class="mt-10 space-y-4 text-gray-300 text-sm">
+
+                <p>✔ Manajemen stok barang</p>
+                <p>✔ Data supplier terstruktur</p>
+                <p>✔ Barang masuk & keluar</p>
+                <p>✔ Laporan otomatis</p>
+
+            </div>
+
         </div>
 
-        <!-- RIGHT SIDE -->
-        <div class="w-full md:w-1/2 p-10">
+        <!-- RIGHT SIDE (FORM) -->
+        <div class="p-10 md:p-14 flex items-center">
 
-            <h2 class="text-3xl font-bold mb-2 text-gray-800">Login</h2>
-            <p class="text-gray-500 mb-6">Masuk ke akun Anda</p>
+            <div class="w-full">
 
-            <form method="POST" action="{{ route('login') }}">
-                @csrf
+                <h2 class="text-3xl font-bold text-gray-800">Login</h2>
+                <p class="text-gray-500 mt-1">Masuk ke akun Anda</p>
 
-                <!-- Email -->
-                <div class="mb-4">
-                    <label class="block mb-1 text-sm text-gray-700">Email</label>
-                    <input type="email" name="email"
-                        class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-400">
-                </div>
+                <!-- ERROR -->
+                @if ($errors->any())
+                    <div class="bg-red-100 text-red-600 px-4 py-3 rounded-lg mt-6">
+                        {{ $errors->first() }}
+                    </div>
+                @endif
 
-                <!-- Password -->
-                <div class="mb-4">
-                    <label class="block mb-1 text-sm text-gray-700">Password</label>
-                    <input type="password" name="password"
-                        class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-400">
-                </div>
+                <!-- FORM -->
+                <form method="POST" action="{{ route('login') }}" class="mt-6 space-y-5">
 
-                <!-- Remember -->
-                <div class="flex justify-between items-center mb-4 text-sm">
-                    <label class="flex items-center gap-2 text-gray-600">
-                        <input type="checkbox" name="remember">
-                        Remember me
-                    </label>
-                    <a href="#" class="text-pink-500 hover:underline">Lupa password?</a>
-                </div>
+                    @csrf
 
-                <!-- Button -->
-                <button type="submit"
-                    class="w-full bg-pink-500 text-white py-2 rounded-lg hover:bg-pink-600 transition font-semibold">
-                    Login
-                </button>
-            </form>
+                    <!-- EMAIL -->
+                    <div>
+                        <label class="text-sm text-gray-600">Email</label>
+                        <input
+                            type="email"
+                            name="email"
+                            value="{{ old('email') }}"
+                            required
+                            class="w-full mt-1 px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-400"
+                            placeholder="Masukkan email"
+                        >
+                    </div>
 
-            <!-- Register -->
-            <p class="text-center text-sm mt-4 text-gray-600">
-                Belum punya akun?
-                <a href="#" class="text-pink-500 hover:underline">Daftar disini</a>
-            </p>
+                    <!-- PASSWORD -->
+                    <div>
+                        <label class="text-sm text-gray-600">Password</label>
+                        <input
+                            type="password"
+                            name="password"
+                            required
+                            class="w-full mt-1 px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-400"
+                            placeholder="Masukkan password"
+                        >
+                    </div>
+
+                    <!-- REMEMBER -->
+                    <div class="flex items-center justify-between text-sm">
+
+                        <label class="flex items-center gap-2 text-gray-600">
+                            <input type="checkbox" name="remember">
+                            Remember me
+                        </label>
+
+                        <a href="#" class="text-gray-500 hover:text-gray-700">
+                            Lupa password?
+                        </a>
+
+                    </div>
+
+                    <!-- BUTTON -->
+                    <button
+                        type="submit"
+                        class="w-full bg-gray-900 hover:bg-gray-800 text-white font-semibold py-3 rounded-lg transition"
+                    >
+                        Login
+                    </button>
+
+                </form>
+
+            </div>
 
         </div>
 

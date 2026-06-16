@@ -1,119 +1,205 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
     <meta charset="UTF-8">
-    <title>E-Ware | Sistem Manajemen Gudang</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GudangKu - Sistem Manajemen Gudang</title>
 
-    <!-- Tailwind -->
     <script src="https://cdn.tailwindcss.com"></script>
-
-    <!-- FONT INTER -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
-
-    <!-- Lucide -->
-    <script src="https://unpkg.com/lucide@latest"></script>
 </head>
 
-<body class="bg-pink-50 text-gray-800 font-[Inter]">
+<body class="bg-slate-50 text-slate-800">
 
-<!-- NAVBAR -->
-<nav class="flex justify-between items-center px-8 py-5 bg-white shadow-sm">
-    
-    <h1 class="text-xl font-bold flex items-center gap-2">
-        <i data-lucide="box"></i>
-        <span class="bg-gradient-to-r from-pink-500 to-purple-500 text-transparent bg-clip-text">
-            E-Ware
-        </span>
-    </h1>
+    <!-- Navbar -->
+    <nav class="bg-white border-b border-slate-200 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
 
-    <div class="space-x-3">
-        <a href="/login" class="px-4 py-2 text-sm bg-pink-500 text-white rounded-lg hover:bg-pink-600 transition">
-            Login
-        </a>
-        <a href="/register" class="px-4 py-2 text-sm border border-pink-500 text-pink-500 rounded-lg hover:bg-pink-50 transition">
-            Register
-        </a>
-    </div>
-</nav>
+            <h1 class="text-3xl font-extrabold">
+                GudangKu
+            </h1>
 
-<!-- HERO -->
-<section class="text-center px-6 py-24 relative overflow-hidden">
+            <div class="flex gap-3">
 
-    <!-- BACKGROUND SOFT -->
-    <div class="absolute w-[400px] h-[400px] bg-pink-200/40 blur-[100px] rounded-full top-[-100px] left-[-100px]"></div>
-    <div class="absolute w-[300px] h-[300px] bg-purple-200/40 blur-[100px] rounded-full bottom-[-100px] right-[-100px]"></div>
+                <a href="{{ route('login') }}"
+                   class="px-5 py-2 bg-slate-900 text-white rounded-xl hover:bg-slate-700 transition">
+                    Login
+                </a>
 
-    <div class="relative z-10 max-w-3xl mx-auto">
+                <a href="{{ route('register') }}"
+                   class="px-5 py-2 border border-slate-300 rounded-xl hover:bg-slate-100 transition">
+                    Register
+                </a>
 
-        <h1 class="text-4xl md:text-5xl font-extrabold leading-tight mb-6">
-            Sistem Manajemen Gudang
-            <br>
-            <span class="bg-gradient-to-r from-pink-500 to-purple-500 text-transparent bg-clip-text">
-                Lebih Modern & Terorganisir
-            </span>
-        </h1>
+            </div>
 
-        <p class="text-gray-600 text-lg leading-relaxed">
-            Kelola stok barang, pantau transaksi masuk dan keluar, serta akses laporan 
-            dengan sistem yang dirancang untuk efisiensi kerja.
-        </p>
+        </div>
+    </nav>
 
-    </div>
+    <!-- Hero -->
+    <section class="max-w-7xl mx-auto px-6 py-24">
 
-</section>
+        <div class="grid lg:grid-cols-2 gap-12 items-center">
 
-<!-- FITUR -->
-<section class="py-20 px-6 max-w-6xl mx-auto">
+            <div>
 
-    <h2 class="text-3xl font-bold text-center mb-16 text-gray-800">
-        Fitur Utama Sistem
-    </h2>
+                <span class="px-4 py-2 bg-slate-200 rounded-full text-sm font-semibold">
+                    Sistem Manajemen Gudang Modern
+                </span>
 
-    <div class="grid md:grid-cols-3 gap-8">
+                <h1 class="text-6xl font-extrabold mt-6 leading-tight">
+                    Kelola Stok Gudang
+                    <span class="text-slate-500">
+                        Lebih Mudah
+                    </span>
+                </h1>
 
-        <div class="bg-white border p-6 rounded-2xl shadow-sm hover:shadow-md transition">
-            <i data-lucide="package" class="mb-4 text-pink-500"></i>
-            <h3 class="text-lg font-semibold mb-2">Manajemen Barang</h3>
-            <p class="text-gray-500 text-sm">Pengelolaan data barang secara terstruktur dan efisien.</p>
+                <p class="mt-6 text-lg text-slate-500">
+                    GudangKu membantu perusahaan mengelola stok barang,
+                    supplier, barang masuk, barang keluar,
+                    laporan dan monitoring persediaan secara real-time.
+                </p>
+
+                <div class="flex gap-4 mt-10">
+
+                    <a href="{{ route('login') }}"
+                       class="px-8 py-4 bg-slate-900 text-white rounded-2xl font-bold hover:bg-slate-700 transition">
+                        Mulai Sekarang
+                    </a>
+
+                    <a href="#fitur"
+                       class="px-8 py-4 border border-slate-300 rounded-2xl font-bold hover:bg-slate-100 transition">
+                        Lihat Fitur
+                    </a>
+
+                </div>
+
+            </div>
+
+            <div>
+
+                <div class="bg-white p-8 rounded-3xl shadow-xl">
+
+                    <h3 class="text-xl font-bold mb-6">
+                        Ringkasan Sistem
+                    </h3>
+
+                    <div class="grid grid-cols-2 gap-4">
+
+                        <div class="bg-slate-100 p-5 rounded-2xl">
+                            <h4 class="font-bold">Barang</h4>
+                            <p class="text-sm text-slate-500 mt-2">
+                                Kelola seluruh data stok.
+                            </p>
+                        </div>
+
+                        <div class="bg-slate-100 p-5 rounded-2xl">
+                            <h4 class="font-bold">Supplier</h4>
+                            <p class="text-sm text-slate-500 mt-2">
+                                Data pemasok terintegrasi.
+                            </p>
+                        </div>
+
+                        <div class="bg-slate-100 p-5 rounded-2xl">
+                            <h4 class="font-bold">Barang Masuk</h4>
+                            <p class="text-sm text-slate-500 mt-2">
+                                Monitoring stok masuk.
+                            </p>
+                        </div>
+
+                        <div class="bg-slate-100 p-5 rounded-2xl">
+                            <h4 class="font-bold">Barang Keluar</h4>
+                            <p class="text-sm text-slate-500 mt-2">
+                                Monitoring stok keluar.
+                            </p>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
         </div>
 
-        <div class="bg-white border p-6 rounded-2xl shadow-sm hover:shadow-md transition">
-            <i data-lucide="arrow-down" class="mb-4 text-green-500"></i>
-            <h3 class="text-lg font-semibold mb-2">Barang Masuk</h3>
-            <p class="text-gray-500 text-sm">Pencatatan barang masuk dengan sistem yang akurat.</p>
+    </section>
+
+    <!-- Fitur -->
+    <section id="fitur" class="bg-white py-24">
+
+        <div class="max-w-7xl mx-auto px-6">
+
+            <h2 class="text-4xl font-extrabold text-center mb-16">
+                Fitur Unggulan
+            </h2>
+
+            <div class="grid md:grid-cols-4 gap-6">
+
+                <div class="bg-slate-50 p-6 rounded-3xl">
+                    <h3 class="font-bold text-xl">
+                        Dashboard
+                    </h3>
+
+                    <p class="text-slate-500 mt-3">
+                        Statistik gudang secara real-time.
+                    </p>
+                </div>
+
+                <div class="bg-slate-50 p-6 rounded-3xl">
+                    <h3 class="font-bold text-xl">
+                        Supplier
+                    </h3>
+
+                    <p class="text-slate-500 mt-3">
+                        Kelola supplier dengan mudah.
+                    </p>
+                </div>
+
+                <div class="bg-slate-50 p-6 rounded-3xl">
+                    <h3 class="font-bold text-xl">
+                        Laporan
+                    </h3>
+
+                    <p class="text-slate-500 mt-3">
+                        Cetak laporan stok kapan saja.
+                    </p>
+                </div>
+
+                <div class="bg-slate-50 p-6 rounded-3xl">
+                    <h3 class="font-bold text-xl">
+                        Multi Role
+                    </h3>
+
+                    <p class="text-slate-500 mt-3">
+                        Admin & Manajer Read Only.
+                    </p>
+                </div>
+
+            </div>
+
         </div>
 
-        <div class="bg-white border p-6 rounded-2xl shadow-sm hover:shadow-md transition">
-            <i data-lucide="arrow-up" class="mb-4 text-red-500"></i>
-            <h3 class="text-lg font-semibold mb-2">Barang Keluar</h3>
-            <p class="text-gray-500 text-sm">Kontrol penuh terhadap distribusi barang keluar.</p>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-slate-900 text-white py-10">
+
+        <div class="max-w-7xl mx-auto px-6 text-center">
+
+            <h2 class="font-bold text-2xl">
+                GudangKu
+            </h2>
+
+            <p class="text-slate-400 mt-2">
+                aplikasi manajemen stok gudang
+            </p>
+
+            <p class="text-slate-500 mt-4 text-sm">
+                © {{ date('Y') }} GudangKu. All Rights Reserved.
+            </p>
+
         </div>
 
-    </div>
-
-</section>
-
-<!-- CTA -->
-<section class="text-center py-16">
-
-    <h2 class="text-2xl font-bold mb-3 text-gray-800">
-        Sistem Siap Digunakan
-    </h2>
-
-    <p class="text-gray-500">
-        Silakan login atau register melalui menu di atas untuk mulai menggunakan sistem.
-    </p>
-
-</section>
-
-<!-- FOOTER -->
-<footer class="text-center text-sm text-gray-500 py-6">
-    © {{ date('Y') }} E-Ware • Aplikasi Manajemen Stok Gudang
-</footer>
-
-<script>
-    lucide.createIcons();
-</script>
+    </footer>
 
 </body>
 </html>

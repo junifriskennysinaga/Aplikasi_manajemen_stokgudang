@@ -2,12 +2,12 @@
 
 @section('content')
 
-<div class="p-6 bg-pink-50 min-h-screen flex justify-center items-start">
+<div class="p-6 bg-gray-100 min-h-screen flex justify-center items-start">
 
-    <div class="w-full max-w-xl bg-white rounded-2xl shadow-md border overflow-hidden">
+    <div class="w-full max-w-xl bg-white rounded-2xl shadow border overflow-hidden">
 
         <!-- HEADER -->
-        <div class="px-6 py-4 border-b">
+        <div class="px-6 py-4 border-b bg-gray-50">
             <h2 class="text-xl font-bold text-gray-800">
                 Tambah Barang
             </h2>
@@ -27,8 +27,8 @@
                 </label>
                 <input name="nama_barang" placeholder="Masukkan nama barang"
                     class="w-full border border-gray-300 rounded-lg px-3 py-2 
-                    focus:ring-2 focus:ring-pink-400 
-                    focus:border-pink-400 
+                    focus:ring-2 focus:ring-gray-400 
+                    focus:border-gray-400 
                     focus:outline-none transition">
             </div>
 
@@ -39,35 +39,32 @@
                 </label>
                 <input name="satuan" placeholder="Contoh: pcs, box, kg"
                     class="w-full border border-gray-300 rounded-lg px-3 py-2 
-                    focus:ring-2 focus:ring-pink-400 
-                    focus:border-pink-400 
+                    focus:ring-2 focus:ring-gray-400 
+                    focus:border-gray-400 
                     focus:outline-none transition">
             </div>
 
-            <!-- CUSTOM KATEGORI -->
+            <!-- KATEGORI -->
             <div class="relative">
                 <label class="block text-sm text-gray-600 mb-1">
                     Kategori
                 </label>
 
-                <!-- VALUE YANG DIKIRIM -->
                 <input type="hidden" name="kategori_id" id="kategori_id">
 
-                <!-- BUTTON -->
                 <button type="button" onclick="toggleDropdown()"
                     class="w-full border border-gray-300 rounded-lg px-3 py-2 text-left bg-white
-                    focus:ring-2 focus:ring-pink-400 focus:border-pink-400 transition">
+                    focus:ring-2 focus:ring-gray-400 focus:border-gray-400 transition">
 
                     <span id="selectedText">-- Pilih Kategori --</span>
                 </button>
 
-                <!-- DROPDOWN -->
                 <div id="dropdownList"
                     class="hidden absolute w-full mt-1 bg-white border rounded-lg shadow z-10 max-h-40 overflow-y-auto">
 
                     @foreach($kategori as $k)
                         <div onclick="selectKategori('{{ $k->id }}','{{ $k->nama_kategori }}')"
-                            class="px-3 py-2 hover:bg-pink-100 cursor-pointer transition">
+                            class="px-3 py-2 hover:bg-gray-100 cursor-pointer transition text-gray-700">
                             {{ $k->nama_kategori }}
                         </div>
                     @endforeach
@@ -83,10 +80,9 @@
                     Batal
                 </a>
 
-                <button class="px-5 py-2 rounded-lg text-sm text-white 
-                               bg-gradient-to-r from-pink-500 to-rose-500 
-                               hover:from-pink-600 hover:to-rose-600 
-                               shadow transition">
+                <button
+                    class="px-5 py-2 rounded-lg text-sm text-white 
+                    bg-gray-800 hover:bg-gray-900 transition shadow">
                     Simpan
                 </button>
 
@@ -110,7 +106,6 @@ function selectKategori(id, nama) {
     document.getElementById('dropdownList').classList.add('hidden');
 }
 
-// OPTIONAL: klik luar nutup dropdown
 window.addEventListener('click', function(e){
     const dropdown = document.getElementById('dropdownList');
     if (!e.target.closest('.relative')) {

@@ -1,93 +1,35 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <title>Register - E-Ware</title>
-
-    <!-- Tailwind -->
+    <meta charset="UTF-8"><title>e-Ware — Pendaftaran</title>
     <script src="https://cdn.tailwindcss.com"></script>
-
-    <!-- Font -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
 </head>
-
-<body class="bg-pink-50 font-[Inter]">
-
-<div class="min-h-screen flex items-center justify-center px-4">
-
-    <div class="w-full max-w-5xl bg-white shadow-xl rounded-2xl overflow-hidden flex">
-
-        <!-- LEFT -->
-        <div class="hidden md:flex w-1/2 bg-gradient-to-br from-pink-500 to-purple-500 text-white p-10 flex-col justify-center">
-
-            <h1 class="text-4xl font-extrabold mb-4">E-Ware</h1>
-
-            <p class="mb-6 text-pink-100">
-                Buat akun dan mulai kelola stok barang dengan sistem yang lebih modern, rapi, dan efisien.
-            </p>
-
-            <ul class="space-y-2 text-sm text-pink-100">
-                <li> Monitoring stok real-time</li>
-                <li> Laporan otomatis</li>
-                <li> Multi user (Admin & Manager)</li>
-            </ul>
+<body class="bg-slate-950 text-slate-100 font-sans flex items-center justify-center min-h-screen p-4 relative overflow-hidden">
+    <div class="bg-slate-900/60 border border-slate-800 p-10 rounded-3xl max-w-md w-full shadow-2xl space-y-6 backdrop-blur-xl relative z-10">
+        <div class="text-center">
+            <h1 class="text-3xl font-extrabold text-white tracking-tight">Buat Otoritas</h1>
+            <p class="text-slate-500 text-xs mt-1">Daftarkan operator gudang e-Ware baru</p>
         </div>
-
-        <!-- RIGHT -->
-        <div class="w-full md:w-1/2 p-10">
-
-            <h2 class="text-3xl font-bold mb-2 text-gray-800">Register</h2>
-            <p class="text-gray-500 mb-6">Buat akun baru</p>
-
-            <form method="POST" action="{{ route('register') }}">
-                @csrf
-
-                <!-- Nama -->
-                <div class="mb-4">
-                    <label class="block mb-1 text-sm text-gray-700">Nama</label>
-                    <input type="text" name="name"
-                        class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-400">
-                </div>
-
-                <!-- Email -->
-                <div class="mb-4">
-                    <label class="block mb-1 text-sm text-gray-700">Email</label>
-                    <input type="email" name="email"
-                        class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-400">
-                </div>
-
-                <!-- Password -->
-                <div class="mb-4">
-                    <label class="block mb-1 text-sm text-gray-700">Password</label>
-                    <input type="password" name="password"
-                        class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-400">
-                </div>
-
-                <!-- Konfirmasi -->
-                <div class="mb-4">
-                    <label class="block mb-1 text-sm text-gray-700">Konfirmasi Password</label>
-                    <input type="password" name="password_confirmation"
-                        class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-400">
-                </div>
-
-                <!-- Button -->
-                <button
-                    class="w-full bg-pink-500 text-white py-2 rounded-lg hover:bg-pink-600 transition font-semibold">
-                    Register
-                </button>
-            </form>
-
-            <!-- Login -->
-            <p class="text-center text-sm mt-4 text-gray-600">
-                Sudah punya akun?
-                <a href="{{ route('login') }}" class="text-pink-500 hover:underline">Login disini</a>
-            </p>
-
-        </div>
-
+        <form action="{{ route('register') }}" method="POST" class="space-y-4">
+            @csrf
+            <div>
+                <label class="block text-[10px] font-black text-slate-400 uppercase tracking-wider mb-1">Nama Lengkap</label>
+                <input type="text" name="name" class="w-full bg-slate-950/50 border border-slate-800 px-4 py-2.5 rounded-xl text-white focus:border-white focus:outline-none text-sm" required>
+            </div>
+            <div>
+                <label class="block text-[10px] font-black text-slate-400 uppercase tracking-wider mb-1">Email Karyawan</label>
+                <input type="email" name="email" class="w-full bg-slate-950/50 border border-slate-800 px-4 py-2.5 rounded-xl text-white focus:border-white focus:outline-none text-sm" required>
+            </div>
+            <div>
+                <label class="block text-[10px] font-black text-slate-400 uppercase tracking-wider mb-1">Kata Sandi Baru</label>
+                <input type="password" name="password" class="w-full bg-slate-950/50 border border-slate-800 px-4 py-2.5 rounded-xl text-white focus:border-white focus:outline-none text-sm" placeholder="Minimal 5 Karakter" required>
+            </div>
+            <button type="submit" class="w-full py-3 bg-white text-slate-950 rounded-xl font-bold transition-all duration-300 text-sm mt-2 shadow-lg shadow-white/5">
+                Konfirmasi Registrasi
+            </button>
+        </form>
+        <p class="text-center text-xs text-slate-500 pt-2">Sudah terdaftar? <a href="{{ route('login') }}" class="text-white font-bold underline">Login Disini</a></p>
     </div>
-
-</div>
-
 </body>
 </html>

@@ -7,14 +7,12 @@ use Illuminate\Http\Request;
 
 class KategoriController extends Controller
 {
-    // TAMPIL DATA
     public function index()
     {
         $kategori = Kategori::latest()->get();
         return view('kategori.index', compact('kategori'));
     }
 
-    // TAMBAH DATA
     public function store(Request $request)
     {
         $request->validate([
@@ -25,10 +23,14 @@ class KategoriController extends Controller
             'nama_kategori' => $request->nama_kategori
         ]);
 
-        return back()->with('success', 'Kategori berhasil ditambahkan');
+        return redirect()->route('kategori.index')->with('success', 'Kategori berhasil ditambahkan');
     }
 
-    // EDIT DATA (UPDATE)
+    public function show($id)
+    {
+        return redirect()->route('kategori.index');
+    }
+
     public function update(Request $request, $id)
     {
         $request->validate([
@@ -41,15 +43,14 @@ class KategoriController extends Controller
             'nama_kategori' => $request->nama_kategori
         ]);
 
-        return back()->with('success', 'Kategori berhasil diupdate');
+        return redirect()->route('kategori.index')->with('success', 'Kategori berhasil diupdate');
     }
 
-    // HAPUS DATA
     public function destroy($id)
     {
         $kategori = Kategori::findOrFail($id);
         $kategori->delete();
 
-        return back()->with('success', 'Kategori berhasil dihapus');
+        return redirect()->route('kategori.index')->with('success', 'Kategori berhasil dihapus');
     }
 }

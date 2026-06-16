@@ -1,119 +1,156 @@
 @extends('layouts.app')
 
-@section('title', 'E-ware')
-
 @section('content')
 
-<!-- WELCOME BANNER -->
-<div class="bg-gradient-to-r from-pink-500 to-purple-500 text-white p-6 rounded-2xl shadow mb-6">
-    <h2 class="text-2xl font-bold">
-        Selamat datang, {{ auth()->user()->name }} 👋
-    </h2>
-    <p class="text-pink-100 text-sm mt-1">
-        Ringkasan aktivitas dan stok gudang hari ini
-    </p>
-</div>
+<div class="space-y-6">
 
-<!-- STAT CARDS -->
-<div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+    <div>
+        <h1 class="text-3xl font-bold text-slate-800">
+            Dashboard GudangKu
+        </h1>
 
-    <!-- TOTAL BARANG -->
-    <div class="bg-white p-6 rounded-2xl shadow hover:shadow-xl hover:-translate-y-1 transition flex items-center justify-between">
-        <div>
-            <p class="text-sm text-gray-500">Total Barang</p>
-            <h2 class="text-3xl font-bold text-gray-800 mt-1">
-                {{ \App\Models\Barang::count() }}
+        <p class="text-slate-500">
+            Monitoring stok gudang secara realtime
+        </p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-5">
+
+        <div class="bg-white p-5 rounded-3xl shadow border">
+            <p class="text-gray-500">Total Barang</p>
+            <h2 class="text-4xl font-bold mt-2">
+                {{ $totalBahan }}
             </h2>
         </div>
-        <div class="bg-pink-100 text-pink-500 p-3 rounded-full">
-            <i data-lucide="package"></i>
-        </div>
-    </div>
 
-    <!-- BARANG MASUK -->
-    <div class="bg-white p-6 rounded-2xl shadow hover:shadow-xl hover:-translate-y-1 transition flex items-center justify-between">
-        <div>
-            <p class="text-sm text-gray-500">Barang Masuk</p>
-            <h2 class="text-3xl font-bold text-green-500 mt-1">
-                {{ \App\Models\BarangMasuk::sum('jumlah') }}
+        <div class="bg-white p-5 rounded-3xl shadow border">
+            <p class="text-gray-500">Barang Masuk</p>
+            <h2 class="text-4xl font-bold text-blue-600 mt-2">
+                {{ $totalMasuk }}
             </h2>
         </div>
-        <div class="bg-green-100 text-green-500 p-3 rounded-full">
-            <i data-lucide="arrow-down-circle"></i>
-        </div>
-    </div>
 
-    <!-- BARANG KELUAR -->
-    <div class="bg-white p-6 rounded-2xl shadow hover:shadow-xl hover:-translate-y-1 transition flex items-center justify-between">
-        <div>
-            <p class="text-sm text-gray-500">Barang Keluar</p>
-            <h2 class="text-3xl font-bold text-red-500 mt-1">
-                {{ \App\Models\BarangKeluar::sum('jumlah') }}
+        <div class="bg-white p-5 rounded-3xl shadow border">
+            <p class="text-gray-500">Barang Keluar</p>
+            <h2 class="text-4xl font-bold text-orange-500 mt-2">
+                {{ $totalKeluar }}
             </h2>
         </div>
-        <div class="bg-red-100 text-red-500 p-3 rounded-full">
-            <i data-lucide="arrow-up-circle"></i>
+
+        <div class="bg-white p-5 rounded-3xl shadow border">
+            <p class="text-gray-500">Stok Menipis</p>
+            <h2 class="text-4xl font-bold text-red-500 mt-2">
+                {{ $stokMenipis }}
+            </h2>
         </div>
+
+    </div>
+
+    <div class="bg-white p-6 rounded-3xl shadow border">
+
+        <h3 class="font-bold text-lg mb-4">
+            Distribusi Stok Barang
+        </h3>
+
+        <div style="height:400px">
+            <canvas id="stokChart"></canvas>
+        </div>
+
+    </div>
+
+    <div class="grid md:grid-cols-2 gap-6">
+
+        <div class="bg-white p-6 rounded-3xl shadow border">
+
+            <h3 class="font-bold mb-4 text-red-600">
+                ⚠️ Peringatan Stok Rendah
+            </h3>
+
+            @forelse($alertBahan as $item)
+
+                <div class="flex justify-between items-center py-3 border-b">
+
+                    <span>
+                        {{ $item->nama_barang }}
+                    </span>
+
+                    <span class="bg-red-100 text-red-600 px-3 py-1 rounded-lg font-bold">
+                        {{ $item->stok }}
+                    </span>
+
+                </div>
+
+            @empty
+
+                <p class="text-green-600">
+                    Semua stok aman
+                </p>
+
+            @endforelse
+
+        </div>
+
+        <div class="bg-white p-6 rounded-3xl shadow border">
+
+            <h3 class="font-bold mb-4">
+                Aktivitas Terbaru
+            </h3>
+
+            @foreach($aktivitas as $item)
+
+                <div class="border-b py-3">
+
+                    <p class="font-semibold">
+                        {{ $item }}
+                    </p>
+
+                </div>
+
+            @endforeach
+
+        </div>
+
     </div>
 
 </div>
 
-<!-- AKTIVITAS TERBARU -->
-<div class="bg-white p-6 rounded-2xl shadow">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-    <div class="flex justify-between items-center mb-4">
-        <h2 class="text-lg font-semibold text-gray-700">
-            Aktivitas Terbaru
-        </h2>
-    </div>
+<script>
 
-    <div class="overflow-x-auto">
+const ctx = document.getElementById('stokChart');
 
-        <table class="w-full text-sm text-left text-gray-600">
+new Chart(ctx, {
+    type: 'pie',
+    data: {
+        labels: @json($chartLabel),
+        datasets: [{
+            data: @json($chartData),
+            backgroundColor: [
+                '#3B82F6',
+                '#10B981',
+                '#F59E0B',
+                '#EF4444',
+                '#8B5CF6',
+                '#06B6D4',
+                '#84CC16',
+                '#F97316',
+                '#EC4899',
+                '#14B8A6'
+            ]
+        }]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+            legend: {
+                position: 'bottom'
+            }
+        }
+    }
+});
 
-            <thead class="bg-pink-50 text-gray-700 uppercase text-xs">
-                <tr>
-                    <th class="px-4 py-3">Tanggal</th>
-                    <th class="px-4 py-3">Barang</th>
-                    <th class="px-4 py-3">Jenis</th>
-                    <th class="px-4 py-3">Jumlah</th>
-                </tr>
-            </thead>
-
-            <tbody class="divide-y">
-
-                @foreach(\App\Models\BarangMasuk::latest()->take(5)->get() as $m)
-                <tr class="hover:bg-pink-50 transition">
-                    <td class="px-4 py-3">{{ $m->tanggal }}</td>
-                    <td class="px-4 py-3">{{ $m->barang->nama_barang ?? '-' }}</td>
-                    <td class="px-4 py-3">
-                        <span class="bg-green-100 text-green-600 text-xs px-2 py-1 rounded-full">
-                            Masuk
-                        </span>
-                    </td>
-                    <td class="px-4 py-3 font-semibold">{{ $m->jumlah }}</td>
-                </tr>
-                @endforeach
-
-                @foreach(\App\Models\BarangKeluar::latest()->take(5)->get() as $k)
-                <tr class="hover:bg-pink-50 transition">
-                    <td class="px-4 py-3">{{ $k->tanggal }}</td>
-                    <td class="px-4 py-3">{{ $k->barang->nama_barang ?? '-' }}</td>
-                    <td class="px-4 py-3">
-                        <span class="bg-red-100 text-red-600 text-xs px-2 py-1 rounded-full">
-                            Keluar
-                        </span>
-                    </td>
-                    <td class="px-4 py-3 font-semibold">{{ $k->jumlah }}</td>
-                </tr>
-                @endforeach
-
-            </tbody>
-
-        </table>
-
-    </div>
-
-</div>
+</script>
 
 @endsection

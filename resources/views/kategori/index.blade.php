@@ -1,172 +1,41 @@
 @extends('layouts.app')
-
 @section('content')
-
-<style>
-input:focus, select:focus, textarea:focus {
-    outline: none !important;
-    box-shadow: none !important;
-}
-
-input:focus, select:focus, textarea:focus {
-    border-color: #f472b6 !important; 
-}
-</style>
-
-<div class="p-6 bg-pink-50 min-h-screen space-y-6">
-
-    <!-- HEADER -->
-    <div>
-        <h2 class="text-2xl font-bold text-gray-800">Data Kategori</h2>
-        <p class="text-gray-500">Kelola kategori barang gudang</p>
-    </div>
-
-    <!-- FORM TAMBAH -->
-    <div class="bg-white p-5 rounded-xl shadow-md border">
-
-        <form method="POST" action="/kategori" class="flex flex-col md:flex-row gap-3 items-center">
-            @csrf
-
-            <div class="relative w-full">
-
-                <input 
-                    name="nama_kategori" 
-                    placeholder="Masukkan nama kategori..."
-                    class="w-full border border-gray-300 rounded-lg px-4 py-2 
-                    focus:outline-none focus:ring-2 focus:ring-pink-400 focus:border-pink-400"
-                >
-
-            </div>
-
-            <button 
-                class="bg-pink-500 text-white px-6 py-2 rounded-lg hover:bg-pink-600 shadow transition w-full md:w-auto">
-                Tambah
-            </button>
-
-        </form>
-
-    </div>
-
-    <!-- TABLE -->
-    <div class="bg-white rounded-xl shadow-md border overflow-hidden">
-
-        <div class="bg-pink-500 text-white px-4 py-3 font-semibold">
-            Daftar Kategori
+<div class="space-y-6 animate-fade-in">
+    <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+        <div>
+            <h2 class="text-2xl font-extrabold text-slate-900 tracking-tight">Klasifikasi Kategori</h2>
+            <p class="text-slate-400 text-sm font-medium">Pengelompokan jenis varian bahan baku kue</p>
         </div>
-
-        <table class="w-full text-sm text-left text-gray-600">
-
-            <thead class="bg-pink-100 text-gray-700 uppercase text-xs">
-                <tr>
-                    <th class="px-6 py-3">No</th>
-                    <th class="px-6 py-3">Nama Kategori</th>
-                    <th class="px-6 py-3 text-center">Aksi</th>
-                </tr>
-            </thead>
-
-            <tbody>
-
-                @forelse($kategori as $i => $k)
-
-                <tr class="border-t hover:bg-pink-50 transition">
-
-                    <td class="px-6 py-3 font-medium">
-                        {{ $i + 1 }}
-                    </td>
-
-                    <td class="px-6 py-3 font-semibold text-gray-800">
-                        {{ $k->nama_kategori }}
-                    </td>
-
-                    <td class="px-6 py-3">
-
-                        <div class="flex justify-center gap-2">
-
-                            <!-- EDIT -->
-                            <button 
-                                data-modal-target="editModal{{ $k->id }}" 
-                                data-modal-toggle="editModal{{ $k->id }}"
-                                class="bg-pink-100 text-pink-600 px-3 py-1.5 rounded-lg hover:bg-pink-200 text-xs transition">
-                                Edit
-                            </button>
-
-                            <!-- DELETE -->
-                            <form method="POST" action="/kategori/{{ $k->id }}"
-                                  onsubmit="return confirm('Yakin mau hapus kategori ini?')">
-                                @csrf
-                                @method('DELETE')
-
-                                <button 
-                                    class="bg-gray-100 text-gray-600 px-3 py-1.5 rounded-lg hover:bg-red-100 hover:text-red-500 text-xs transition">
-                                    Hapus
-                                </button>
-
-                            </form>
-
-                        </div>
-
-                    </td>
-
-                </tr>
-
-                <!-- MODAL EDIT -->
-                <div id="editModal{{ $k->id }}" tabindex="-1"
-                     class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm">
-
-                    <div class="bg-white rounded-xl shadow-xl p-6 w-full max-w-md">
-
-                        <h3 class="text-lg font-semibold mb-4 text-gray-800">
-                            Edit Kategori
-                        </h3>
-
-                        <form method="POST" action="/kategori/{{ $k->id }}">
-                            @csrf
-                            @method('PUT')
-
-                            <input 
-                                type="text"
-                                name="nama_kategori"
-                                value="{{ $k->nama_kategori }}"
-                                class="w-full border border-gray-300 rounded-lg px-4 py-2 mb-4 
-                                focus:outline-none focus:ring-2 focus:ring-pink-400 focus:border-pink-400"
-                            >
-
-                            <div class="flex justify-end gap-2">
-
-                                <button type="button"
-                                    data-modal-hide="editModal{{ $k->id }}"
-                                    class="px-4 py-2 border rounded-lg hover:bg-gray-100">
-                                    Batal
-                                </button>
-
-                                <button class="bg-pink-500 text-white px-4 py-2 rounded-lg hover:bg-pink-600">
-                                    Update
-                                </button>
-
-                            </div>
-
-                        </form>
-
-                    </div>
-
-                </div>
-
-                @empty
-
-                <tr>
-                    <td colspan="3" class="text-center py-6 text-gray-400">
-                        Belum ada data kategori
-                    </td>
-                </tr>
-
-                @endforelse
-
-            </tbody>
-
-        </table>
-
+        
+        <form action="{{ route('kategori.store') }}" method="POST" class="flex gap-2 bg-white p-2 rounded-2xl border border-slate-200/80 shadow-sm w-full md:w-auto">
+            @csrf
+            <input type="text" name="nama_kategori" placeholder="Nama Kategori Baru" class="px-4 py-2 border border-slate-200 rounded-xl text-sm font-semibold focus:outline-none focus:border-slate-400" required>
+            <button type="submit" class="bg-slate-950 hover:bg-black text-white px-5 py-2 rounded-xl text-sm font-bold transition shadow-md">Simpan</button>
+        </form>
     </div>
 
+    <div class="bg-white rounded-3xl border border-slate-200/80 shadow-sm overflow-hidden">
+        <table class="w-full text-left border-collapse">
+            <thead class="bg-slate-50/70 border-b border-slate-200/80 text-slate-400 font-bold text-[10px] uppercase tracking-widest">
+                <tr><th class="p-4 pl-6">ID Kategori</th><th class="p-4">Nama Klasifikasi</th><th class="p-4 pr-6 text-right">Manajemen Aksi</th></tr>
+            </thead>
+            <tbody class="divide-y divide-slate-100 text-sm font-medium text-slate-700">
+                @forelse($kategori as $kat)
+                <tr class="hover:bg-slate-50/50 transition">
+                    <td class="p-4 pl-6 font-mono text-slate-400">#00{{ $kat->id }}</td>
+                    <td class="p-4 font-bold text-slate-900">{{ $kat->nama_kategori }}</td>
+                    <td class="p-4 pr-6 text-right">
+                        <form action="{{ route('kategori.destroy', $kat->id) }}" method="POST" onsubmit="return confirm('Hapus Kategori?')">
+                            @csrf @method('DELETE')
+                            <button class="text-rose-600 hover:text-rose-700 font-bold text-xs underline decoration-2 underline-offset-4">Hapus Permanen</button>
+                        </form>
+                    </td>
+                </tr>
+                @empty
+                <tr><td colspan="3" class="p-8 text-center text-slate-400">Data klasifikasi kosong.</td></tr>
+                @endforelse
+            </tbody>
+        </table>
+    </div>
 </div>
-
 @endsection

@@ -8,14 +8,26 @@ use Illuminate\Http\Request;
 
 class BarangKeluarController extends Controller
 {
-    public function index(){
+    public function index()
+    {
         $barang = Barang::all();
         return view('barang_keluar.index', compact('barang'));
     }
 
-    public function store(Request $request){
+    public function store(Request $request)
+    {
+        $request->validate([
+            'barang_id' => 'required|exists:barangs,id',
+            'jumlah' => 'required|integer|min:1'
+        ]);
 
-        $barang = Barang::find($request->barang_id);
+        $barang = Barang::findOrFail($request->barang_id);
+
+        if ($barang->stok < $request->jumlah) {
+            return redirect()
+                ->back()
+                ->with('error', 'Stok tidak mencukupi');
+        }
 
         BarangKeluar::create([
             'barang_id' => $request->barang_id,
@@ -23,9 +35,8 @@ class BarangKeluarController extends Controller
             'tanggal' => now()
         ]);
 
-        $barang->stok -= $request->jumlah;
-        $barang->save();
-
-        return back();
+        return redirect()
+            ->back()
+            ->with('success', 'Barang keluar berhasil ditambahkan');
     }
 }

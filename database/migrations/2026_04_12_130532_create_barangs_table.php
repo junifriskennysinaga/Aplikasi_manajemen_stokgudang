@@ -8,14 +8,30 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('barangs', function (Blueprint $table) {
-            $table->id();
-            $table->string('nama_barang');
-            $table->integer('stok')->default(0);
-            $table->string('satuan');
-            $table->unsignedBigInteger('kategori_id');
-            $table->timestamps();
-        });
+        if (!Schema::hasTable('barangs')) {
+
+            Schema::create('barangs', function (Blueprint $table) {
+
+                $table->id();
+
+                $table->string('nama_barang', 100);
+
+                $table->integer('stok')->default(0);
+
+                $table->string('satuan', 20);
+
+                $table->foreignId('kategori_id')
+                    ->constrained('kategoris')
+                    ->cascadeOnDelete();
+
+                $table->foreignId('supplier_id')
+                    ->nullable()
+                    ->constrained('suppliers')
+                    ->nullOnDelete();
+
+                $table->timestamps();
+            });
+        }
     }
 
     public function down(): void

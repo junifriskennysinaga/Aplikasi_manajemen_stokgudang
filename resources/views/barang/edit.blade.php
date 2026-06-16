@@ -1,146 +1,145 @@
 @extends('layouts.app')
 
 @section('content')
+<div class="space-y-6 animate-fade-in">
+    <!-- Header Page -->
+    <div>
+        <h2 class="text-2xl font-extrabold text-slate-900 tracking-tight">Edit Inventaris Bahan</h2>
+        <p class="text-slate-400 text-sm font-medium">Modifikasi spesifikasi data komoditas Gudang Toko Tunas Maju</p>
+    </div>
 
-<div class="p-6 bg-pink-50 min-h-screen">
+    <!-- CARD UTAMA (Glassmorphism Style) -->
+    <div class="bg-white rounded-3xl border border-slate-200/80 shadow-xl p-8 max-w-2xl mx-auto">
+        <div class="border-b border-slate-100 pb-4 mb-6">
+            <h3 class="text-lg font-bold text-slate-900">Formulir Pembaruan Data</h3>
+            <p class="text-slate-400 text-xs">Pastikan seluruh input data kuantitas dan relasi sudah benar sebelum disimpan.</p>
+        </div>
 
-    <!-- CARD EDIT -->
-    <div class="bg-white rounded-xl shadow-xl p-6 w-full max-w-2xl mx-auto">
-
-        <h3 class="text-2xl font-bold text-gray-800">
-            Edit Barang
-        </h3>
-
-        <p class="text-gray-500 mb-6">
-            Perbarui data barang di bawah ini
-        </p>
-
-        <form method="POST" action="/barang/{{ $barang->id }}">
+        <form method="POST" action="{{ route('barang.update', $barang->id) }}" class="space-y-5">
             @csrf
             @method('PUT')
 
-            <!-- Nama Barang -->
-            <div class="mb-4">
-                <label class="block text-gray-600 mb-2">
-                    Nama Barang
+            <!-- Input: Nama Barang -->
+            <div>
+                <label class="block text-[10px] font-black text-slate-400 uppercase tracking-wider mb-2">
+                    Nama Komoditas Bahan Baku
                 </label>
-
                 <input 
                     type="text"
                     name="nama_barang"
-                    value="{{ $barang->nama_barang }}"
-                    class="w-full border border-gray-300 rounded-lg px-4 py-3
-                    focus:outline-none focus:border-pink-400"
+                    value="{{ old('nama_barang', $barang->nama_barang) }}"
+                    class="w-full bg-slate-50 border border-slate-200 px-4 py-3 rounded-xl focus:bg-white focus:border-slate-900 focus:outline-none text-slate-900 transition-all text-sm font-medium"
+                    placeholder="Contoh: Mentega Wisman Premium"
+                    required
                 >
             </div>
 
-            <!-- Satuan -->
-            <div class="mb-4">
-                <label class="block text-gray-600 mb-2">
-                    Satuan
+            <!-- Input: Satuan Ukur -->
+            <div>
+                <label class="block text-[10px] font-black text-slate-400 uppercase tracking-wider mb-2">
+                    Satuan Ukur / Kemasan
                 </label>
-
                 <input 
                     type="text"
                     name="satuan"
-                    value="{{ $barang->satuan }}"
-                    class="w-full border border-gray-300 rounded-lg px-4 py-3
-                    focus:outline-none focus:border-pink-400"
+                    value="{{ old('satuan', $barang->satuan) }}"
+                    class="w-full bg-slate-50 border border-slate-200 px-4 py-3 rounded-xl focus:bg-white focus:border-slate-900 focus:outline-none text-slate-900 transition-all text-sm font-medium"
+                    placeholder="Contoh: Kg / Pcs / Kaleng"
+                    required
                 >
             </div>
 
-            <!-- Kategori -->
-            <div class="mb-6">
-                <label class="block text-gray-600 mb-2">
-                    Kategori
+            <!-- Kustom Dropdown: Kategori -->
+            <div>
+                <label class="block text-[10px] font-black text-slate-400 uppercase tracking-wider mb-2">
+                    Klasifikasi Kelompok Kategori
                 </label>
 
                 <div class="relative">
-
-                    <!-- tombol dropdown -->
+                    <!-- Tombol Pemicu Dropdown -->
                     <button 
                         type="button"
                         id="dropdownButton"
-                        class="w-full border border-pink-400 rounded-lg px-4 py-3 
-                        text-left bg-white focus:outline-none">
-
-                        <span id="selectedText">
-                            {{ $barang->kategori->nama_kategori }}
+                        class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-left focus:bg-white focus:border-slate-900 focus:outline-none flex justify-between items-center transition-all"
+                    >
+                        <span id="selectedText" class="text-sm font-semibold text-slate-800">
+                            {{ $barang->kategori->nama_kategori ?? 'Pilih Kategori' }}
                         </span>
+                        <!-- Icon Panah Dropdown -->
+                        <svg class="w-4 h-4 text-slate-400 transition-transform duration-200" id="dropdownArrow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                        </svg>
                     </button>
 
-                    <!-- menu dropdown -->
+                    <!-- Menu Pilihan Dropdown -->
                     <div 
                         id="dropdownMenu"
-                        class="hidden absolute w-full mt-1 bg-white border 
-                        rounded-lg shadow-lg z-50">
-
+                        class="hidden absolute w-full mt-2 bg-white border border-slate-200 rounded-2xl shadow-xl z-50 overflow-hidden max-h-60 overflow-y-auto animate-fade-in"
+                    >
                         @foreach($kategori as $k)
-
                             <div 
                                 onclick="selectKategori('{{ $k->id }}', '{{ $k->nama_kategori }}')"
-                                class="px-4 py-3 hover:bg-pink-100 cursor-pointer transition">
-
-                                {{ $k->nama_kategori }}
-
+                                class="px-4 py-3 hover:bg-slate-50 text-sm font-semibold text-slate-700 hover:text-slate-900 cursor-pointer transition flex items-center justify-between"
+                            >
+                                <span>{{ $k->nama_kategori }}</span>
+                                @if($barang->kategori_id == $k->id)
+                                    <span class="text-xs text-slate-400 font-bold uppercase tracking-wider bg-slate-100 px-2 py-0.5 rounded">Aktif</span>
+                                @endif
                             </div>
-
                         @endforeach
-
                     </div>
-
                 </div>
 
-                <!-- hidden input -->
+                <!-- Hidden Input Khusus Pengiriman Data ke Controller -->
                 <input 
                     type="hidden"
                     name="kategori_id"
                     id="kategori_id"
-                    value="{{ $barang->kategori_id }}">
+                    value="{{ old('kategori_id', $barang->kategori_id) }}"
+                >
             </div>
 
-            <!-- tombol -->
-            <div class="flex justify-end gap-3">
-
+            <div class="flex justify-end gap-3 pt-4 border-t border-slate-100">
                 <a 
-                    href="/barang"
-                    class="px-6 py-2 bg-gray-100 rounded-lg hover:bg-gray-200">
-                    Batal
+                    href="{{ route('barang.index') }}"
+                    class="px-6 py-3 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-xs font-bold uppercase tracking-wider transition"
+                >
+                    Kembali / Batal
                 </a>
 
                 <button
-                    class="px-6 py-2 bg-pink-500 text-white rounded-lg hover:bg-pink-600">
-                    Update
+                    type="submit"
+                    class="px-6 py-3 bg-slate-950 hover:bg-black text-white rounded-xl text-xs font-bold uppercase tracking-wider shadow-lg shadow-slate-950/10 transition"
+                >
+                    Simpan Perubahan
                 </button>
-
             </div>
-
         </form>
-
     </div>
-
 </div>
 
-<!-- SCRIPT DROPDOWN -->
 <script>
-const btn = document.getElementById('dropdownButton');
-const menu = document.getElementById('dropdownMenu');
+    const btn = document.getElementById('dropdownButton');
+    const menu = document.getElementById('dropdownMenu');
+    const arrow = document.getElementById('dropdownArrow');
 
-btn.addEventListener('click', () => {
-    menu.classList.toggle('hidden');
-});
+    btn.addEventListener('click', () => {
+        menu.classList.toggle('hidden');
+        arrow.classList.toggle('rotate-180');
+    });
 
-function selectKategori(id, nama) {
-    document.getElementById('kategori_id').value = id;
-    document.getElementById('selectedText').innerText = nama;
-    menu.classList.add('hidden');
-}
-
-window.addEventListener('click', function(e) {
-    if (!btn.contains(e.target) && !menu.contains(e.target)) {
+    function selectKategori(id, nama) {
+        document.getElementById('kategori_id').value = id;
+        document.getElementById('selectedText').innerText = nama;
         menu.classList.add('hidden');
+        arrow.classList.remove('rotate-180');
     }
-});
-</script>
 
+    window.addEventListener('click', function(e) {
+        if (!btn.contains(e.target) && !menu.contains(e.target)) {
+            menu.classList.add('hidden');
+            arrow.classList.remove('rotate-180');
+        }
+    });
+</script>
 @endsection
