@@ -13,11 +13,11 @@ class BarangController extends Controller
     {
         $totalBahan = Barang::count();
 
-        $stokMenipis = Barang::where('stok', '<=', 5)->count();
+        $stokMenipis = Barang::where('stok', '<=', 15)->count();
 
-        $alertBahan = Barang::where('stok', '<=', 5)
+        $alertBahan = Barang::where('stok', '<=', 15)
             ->latest()
-            ->take(5)
+            ->take(15)
             ->get();
 
         $totalMasuk = 0;

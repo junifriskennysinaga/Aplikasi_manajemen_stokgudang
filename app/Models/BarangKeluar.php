@@ -20,9 +20,6 @@ class BarangKeluar extends Model
         'tanggal' => 'date',
     ];
 
-    /**
-     * Relasi Kebalikan: BarangKeluar milik sebuah Barang.
-     */
     public function barang(): BelongsTo
     {
         return $this->belongsTo(Barang::class, 'barang_id');
@@ -33,7 +30,6 @@ class BarangKeluar extends Model
         static::created(function ($barangKeluar) {
             $barang = $barangKeluar->barang;
             if ($barang) {
-                // Mengurangi stok barang secara otomatis di database
                 $barang->decrement('stok', $barangKeluar->jumlah);
             }
         });

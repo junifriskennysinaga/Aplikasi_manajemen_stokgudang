@@ -1,97 +1,93 @@
 @extends('layouts.app')
+@section('title', 'Edit Barang - GudangKu')
 
 @section('content')
-<div class="space-y-6 animate-fade-in">
-    <!-- Header Page -->
-    <div>
-        <h2 class="text-2xl font-extrabold text-slate-900 tracking-tight">Edit Inventaris Bahan</h2>
-        <p class="text-slate-400 text-sm font-medium">Modifikasi spesifikasi data komoditas Gudang Toko Tunas Maju</p>
-    </div>
 
-    <!-- CARD UTAMA (Glassmorphism Style) -->
-    <div class="bg-white rounded-3xl border border-slate-200/80 shadow-xl p-8 max-w-2xl mx-auto">
-        <div class="border-b border-slate-100 pb-4 mb-6">
-            <h3 class="text-lg font-bold text-slate-900">Formulir Pembaruan Data</h3>
-            <p class="text-slate-400 text-xs">Pastikan seluruh input data kuantitas dan relasi sudah benar sebelum disimpan.</p>
+<div class="max-w-xl mx-auto">
+
+    <a href="{{ route('barang.index') }}" class="inline-flex items-center gap-1.5 text-sm font-semibold text-slate-400 hover:text-slate-700 transition mb-5">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>
+        Kembali
+    </a>
+
+    <div class="bg-white rounded-2xl border border-slate-200/80 overflow-hidden">
+
+        <div class="px-6 py-5 border-b border-slate-100">
+            <h2 class="text-lg font-extrabold text-slate-900">Edit Barang</h2>
+            <p class="text-sm text-slate-400 mt-0.5">Perbarui data barang yang sudah ada</p>
         </div>
 
-        <form method="POST" action="{{ route('barang.update', $barang->id) }}" class="space-y-5">
+        <form method="POST" action="{{ route('barang.update', $barang->id) }}" class="p-6 space-y-5">
             @csrf
             @method('PUT')
 
-            <!-- Input: Nama Barang -->
             <div>
-                <label class="block text-[10px] font-black text-slate-400 uppercase tracking-wider mb-2">
-                    Nama Komoditas Bahan Baku
+                <label class="block text-xs font-bold text-slate-500 uppercase tracking-wide mb-1.5">
+                    Nama Barang
                 </label>
-                <input 
+                <input
                     type="text"
                     name="nama_barang"
                     value="{{ old('nama_barang', $barang->nama_barang) }}"
-                    class="w-full bg-slate-50 border border-slate-200 px-4 py-3 rounded-xl focus:bg-white focus:border-slate-900 focus:outline-none text-slate-900 transition-all text-sm font-medium"
-                    placeholder="Contoh: Mentega Wisman Premium"
+                    class="w-full border border-slate-200 rounded-xl px-3.5 py-2.5 text-sm focus:ring-2 focus:ring-slate-900/10 focus:border-slate-900 focus:outline-none transition"
+                    placeholder="Contoh: Mentega Premium"
                     required
                 >
             </div>
 
-            <!-- Input: Satuan Ukur -->
             <div>
-                <label class="block text-[10px] font-black text-slate-400 uppercase tracking-wider mb-2">
-                    Satuan Ukur / Kemasan
+                <label class="block text-xs font-bold text-slate-500 uppercase tracking-wide mb-1.5">
+                    Satuan
                 </label>
-                <input 
+                <input
                     type="text"
                     name="satuan"
                     value="{{ old('satuan', $barang->satuan) }}"
-                    class="w-full bg-slate-50 border border-slate-200 px-4 py-3 rounded-xl focus:bg-white focus:border-slate-900 focus:outline-none text-slate-900 transition-all text-sm font-medium"
+                    class="w-full border border-slate-200 rounded-xl px-3.5 py-2.5 text-sm focus:ring-2 focus:ring-slate-900/10 focus:border-slate-900 focus:outline-none transition"
                     placeholder="Contoh: Kg / Pcs / Kaleng"
                     required
                 >
             </div>
 
-            <!-- Kustom Dropdown: Kategori -->
             <div>
-                <label class="block text-[10px] font-black text-slate-400 uppercase tracking-wider mb-2">
-                    Klasifikasi Kelompok Kategori
+                <label class="block text-xs font-bold text-slate-500 uppercase tracking-wide mb-1.5">
+                    Kategori
                 </label>
 
                 <div class="relative">
-                    <!-- Tombol Pemicu Dropdown -->
-                    <button 
+                    <button
                         type="button"
                         id="dropdownButton"
-                        class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-left focus:bg-white focus:border-slate-900 focus:outline-none flex justify-between items-center transition-all"
+                        class="w-full border border-slate-200 rounded-xl px-3.5 py-2.5 text-left flex justify-between items-center text-sm
+                        focus:ring-2 focus:ring-slate-900/10 focus:border-slate-900 transition"
                     >
-                        <span id="selectedText" class="text-sm font-semibold text-slate-800">
+                        <span id="selectedText" class="text-slate-700 font-medium">
                             {{ $barang->kategori->nama_kategori ?? 'Pilih Kategori' }}
                         </span>
-                        <!-- Icon Panah Dropdown -->
-                        <svg class="w-4 h-4 text-slate-400 transition-transform duration-200" id="dropdownArrow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                        <svg class="w-4 h-4 text-slate-400 transition-transform duration-200" id="dropdownArrow" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/>
                         </svg>
                     </button>
 
-                    <!-- Menu Pilihan Dropdown -->
-                    <div 
+                    <div
                         id="dropdownMenu"
-                        class="hidden absolute w-full mt-2 bg-white border border-slate-200 rounded-2xl shadow-xl z-50 overflow-hidden max-h-60 overflow-y-auto animate-fade-in"
+                        class="hidden absolute w-full mt-1.5 bg-white border border-slate-200 rounded-xl shadow-lg z-50 overflow-hidden max-h-60 overflow-y-auto"
                     >
                         @foreach($kategori as $k)
-                            <div 
+                            <div
                                 onclick="selectKategori('{{ $k->id }}', '{{ $k->nama_kategori }}')"
-                                class="px-4 py-3 hover:bg-slate-50 text-sm font-semibold text-slate-700 hover:text-slate-900 cursor-pointer transition flex items-center justify-between"
+                                class="px-3.5 py-2.5 hover:bg-slate-50 text-sm font-medium text-slate-700 cursor-pointer transition flex items-center justify-between"
                             >
                                 <span>{{ $k->nama_kategori }}</span>
                                 @if($barang->kategori_id == $k->id)
-                                    <span class="text-xs text-slate-400 font-bold uppercase tracking-wider bg-slate-100 px-2 py-0.5 rounded">Aktif</span>
+                                    <span class="text-[10px] text-slate-400 font-bold uppercase bg-slate-100 px-2 py-0.5 rounded">Aktif</span>
                                 @endif
                             </div>
                         @endforeach
                     </div>
                 </div>
 
-                <!-- Hidden Input Khusus Pengiriman Data ke Controller -->
-                <input 
+                <input
                     type="hidden"
                     name="kategori_id"
                     id="kategori_id"
@@ -99,17 +95,17 @@
                 >
             </div>
 
-            <div class="flex justify-end gap-3 pt-4 border-t border-slate-100">
-                <a 
+            <div class="flex justify-end gap-3 pt-5 border-t border-slate-100">
+                <a
                     href="{{ route('barang.index') }}"
-                    class="px-6 py-3 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-xs font-bold uppercase tracking-wider transition"
+                    class="px-5 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-600 rounded-xl text-sm font-semibold transition"
                 >
-                    Kembali / Batal
+                    Batal
                 </a>
 
                 <button
                     type="submit"
-                    class="px-6 py-3 bg-slate-950 hover:bg-black text-white rounded-xl text-xs font-bold uppercase tracking-wider shadow-lg shadow-slate-950/10 transition"
+                    class="px-5 py-2.5 bg-slate-900 hover:bg-slate-700 text-white rounded-xl text-sm font-semibold shadow-lg shadow-slate-900/10 transition"
                 >
                     Simpan Perubahan
                 </button>
