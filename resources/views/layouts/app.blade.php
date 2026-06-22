@@ -7,19 +7,27 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Outfit:wght@600;700;800&display=swap" rel="stylesheet">
 
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
             theme: {
                 extend: {
-                    fontFamily: { sans: ['Plus Jakarta Sans', 'sans-serif'] },
+                    fontFamily: { sans: ['Plus Jakarta Sans', 'sans-serif'], display: ['Outfit', 'sans-serif'] },
                     colors: {
                         brand: {
-                            50: '#f0fdfa', 100: '#ccfbf1', 200: '#99f6e4',
-                            300: '#5eead4', 400: '#2dd4bf', 500: '#14b8a6',
-                            600: '#0d9488', 700: '#0f766e', 800: '#115e59', 900: '#134e4a'
+                            50:  '#f1f0ff',
+                            100: '#e4e1ff',
+                            200: '#cbc6ff',
+                            300: '#a79dff',
+                            400: '#8b7bff',
+                            500: '#7458ff',
+                            600: '#6437f5',
+                            700: '#5527d8',
+                            800: '#4621ae',
+                            900: '#3a1f8a',
+                            950: '#241261'
                         }
                     }
                 }
@@ -29,12 +37,14 @@
 
     <style>
         * { font-family: 'Plus Jakarta Sans', sans-serif; }
+        .font-display { font-family: 'Outfit', sans-serif; }
         ::-webkit-scrollbar { width: 6px; height: 6px; }
         ::-webkit-scrollbar-track { background: transparent; }
         ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
         ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
-        .nav-active { background: #ffffff; color: #0f172a; box-shadow: 0 1px 2px rgba(0,0,0,0.04); }
-        .nav-active .nav-dot { background: #14b8a6; }
+        .nav-active { background: linear-gradient(135deg, #6437f5, #c026d3); color: #ffffff; box-shadow: 0 4px 14px rgba(100,55,245,0.35); }
+        .nav-active .nav-dot { background: #ffffff; }
+        .nav-active svg { color: #ffffff; }
         @keyframes fadeIn { from { opacity:0; transform: translateY(4px); } to { opacity:1; transform: translateY(0); } }
         .animate-fade-in { animation: fadeIn .35s ease-out; }
     </style>
@@ -49,20 +59,20 @@
 
         <div class="px-6 pt-7 pb-5">
             <a href="{{ route('dashboard') }}" class="flex items-center gap-3 group">
-                <div class="w-10 h-10 rounded-xl bg-slate-900 flex items-center justify-center shrink-0 group-hover:bg-brand-600 transition-colors">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-brand-600 to-fuchsia-500 flex items-center justify-center shrink-0 shadow-md shadow-brand-500/30 group-hover:scale-105 transition-transform">
                     <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/>
                     </svg>
                 </div>
                 <div>
-                    <p class="text-base font-extrabold tracking-tight text-slate-900 leading-none">GudangKu</p>
+                    <p class="font-display text-base font-bold tracking-tight text-slate-900 leading-none">GudangKu</p>
                     <p class="text-[11px] text-slate-400 font-medium mt-1">Manajemen Stok Gudang</p>
                 </div>
             </a>
         </div>
 
         <div class="mx-4 mb-3 px-4 py-3 rounded-2xl bg-white border border-slate-200/80 flex items-center gap-3">
-            <div class="w-9 h-9 rounded-full bg-brand-100 text-brand-700 flex items-center justify-center font-bold text-sm shrink-0">
+            <div class="w-9 h-9 rounded-full bg-gradient-to-br from-brand-100 to-fuchsia-100 text-brand-700 flex items-center justify-center font-bold text-sm shrink-0">
                 {{ strtoupper(substr(auth()->user()->name,0,1)) }}
             </div>
             <div class="min-w-0">
@@ -193,10 +203,10 @@
     <!-- MOBILE TOP BAR -->
     <div class="lg:hidden fixed top-0 inset-x-0 z-40 bg-white border-b border-slate-200 px-4 py-3 flex items-center justify-between">
         <a href="{{ route('dashboard') }}" class="flex items-center gap-2">
-            <div class="w-8 h-8 rounded-lg bg-slate-900 flex items-center justify-center">
+            <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-brand-600 to-fuchsia-500 flex items-center justify-center">
                 <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg>
             </div>
-            <span class="font-extrabold text-slate-900">GudangKu</span>
+            <span class="font-display font-bold text-slate-900">GudangKu</span>
         </a>
         <button onclick="document.getElementById('mobileMenu').classList.toggle('hidden')" class="p-2 rounded-lg hover:bg-slate-100">
             <svg class="w-6 h-6 text-slate-700" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/></svg>

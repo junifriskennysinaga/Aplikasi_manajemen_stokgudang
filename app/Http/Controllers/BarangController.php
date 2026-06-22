@@ -27,7 +27,6 @@ class BarangController extends Controller
             'Belum ada aktivitas gudang'
         ];
 
-        // Grafik stok barang
         $chartLabel = Barang::pluck('nama_barang');
         $chartData = Barang::pluck('stok');
 
@@ -51,11 +50,21 @@ class BarangController extends Controller
         ])->latest()->get();
 
         $kategoris = Kategori::all();
-
         $suppliers = Supplier::all();
 
         return view('barang.index', compact(
             'barangs',
+            'kategoris',
+            'suppliers'
+        ));
+    }
+
+    public function create()
+    {
+        $kategoris = Kategori::all();
+        $suppliers = Supplier::all();
+
+        return view('barang.create', compact(
             'kategoris',
             'suppliers'
         ));
@@ -82,6 +91,18 @@ class BarangController extends Controller
         return redirect()
             ->route('barang.index')
             ->with('success', 'Barang berhasil ditambahkan');
+    }
+
+    public function edit(Barang $barang)
+    {
+        $kategoris = Kategori::all();
+        $suppliers = Supplier::all();
+
+        return view('barang.edit', compact(
+            'barang',
+            'kategoris',
+            'suppliers'
+        ));
     }
 
     public function update(Request $request, Barang $barang)
@@ -116,3 +137,4 @@ class BarangController extends Controller
             ->with('success', 'Barang berhasil dihapus');
     }
 }
+
