@@ -17,26 +17,23 @@ class BarangKeluarController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'barang_id' => 'required|exists:barangs,id',
-            'jumlah' => 'required|integer|min:1'
+            'barang_id'   => 'required|exists:barangs,id',
+            'jumlah'      => 'required|integer|min:1',
+            'tanggal'     => 'required|date',     
         ]);
 
         $barang = Barang::findOrFail($request->barang_id);
 
         if ($barang->stok < $request->jumlah) {
-            return redirect()
-                ->back()
-                ->with('error', 'Stok tidak mencukupi');
+            return redirect()->back()->with('error', 'Stok tidak mencukupi');
         }
 
         BarangKeluar::create([
-            'barang_id' => $request->barang_id,
-            'jumlah' => $request->jumlah,
-            'tanggal' => now()
+            'barang_id'  => $request->barang_id,
+            'jumlah'     => $request->jumlah,
+            'tanggal'    => $request->tanggal,    
         ]);
 
-        return redirect()
-            ->back()
-            ->with('success', 'Barang keluar berhasil ditambahkan');
+        return redirect()->back()->with('success', 'Barang keluar berhasil ditambahkan');
     }
 }

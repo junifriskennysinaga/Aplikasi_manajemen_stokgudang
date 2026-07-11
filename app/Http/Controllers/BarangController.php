@@ -23,9 +23,7 @@ class BarangController extends Controller
         $totalMasuk = 0;
         $totalKeluar = 0;
 
-        $aktivitas = [
-            'Belum ada aktivitas gudang'
-        ];
+        $LogAktivitas = [];
 
         $chartLabel = Barang::pluck('nama_barang');
         $chartData = Barang::pluck('stok');
@@ -36,7 +34,7 @@ class BarangController extends Controller
             'alertBahan',
             'totalMasuk',
             'totalKeluar',
-            'aktivitas',
+            'LogAktivitas',
             'chartLabel',
             'chartData'
         ));
